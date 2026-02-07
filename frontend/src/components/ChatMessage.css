@@ -1,0 +1,150 @@
+.chat-message {
+    display: flex;
+    gap: var(--spacing-md);
+    animation: slideInUp 0.3s ease-out;
+}
+
+.chat-message.user {
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: white;
+    flex-shrink: 0;
+    text-transform: capitalize;
+}
+
+.message-content {
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message.user .message-content {
+    align-items: flex-end;
+}
+
+.message-sender {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+    text-transform: capitalize;
+}
+
+.message-bubble {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    line-height: 1.6;
+}
+
+.chat-message.agent .message-bubble {
+    background: var(--color-bg-tertiary);
+    border-top-left-radius: var(--spacing-xs);
+    color: var(--color-text-primary);
+}
+
+.chat-message.user .message-bubble {
+    background: var(--color-accent-gradient);
+    border-top-right-radius: var(--spacing-xs);
+    color: white;
+}
+
+.message-text {
+    font-size: 0.9375rem;
+}
+
+.message-text p {
+    margin: 0 0 0.5em 0;
+}
+
+.message-text p:last-child {
+    margin-bottom: 0;
+}
+
+.message-time {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+/* List items */
+.list-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: 0.4em 0;
+    padding-left: 0.5em;
+}
+
+.list-item.numbered .list-marker {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+    min-width: 1.5em;
+}
+
+.list-item.bullet .list-marker {
+    color: var(--color-accent-secondary);
+    font-weight: bold;
+}
+
+/* Headers in messages */
+.message-header {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-accent-primary);
+    margin: 0.8em 0 0.4em 0;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    padding-bottom: 0.3em;
+}
+
+.message-header:first-child {
+    margin-top: 0;
+}
+
+/* Labeled lines (VERDICT:, REASON:, etc.) */
+.labeled-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin: 0.5em 0;
+    padding: 0.5em;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-accent-primary);
+}
+
+.labeled-line .label {
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+/* Line breaks */
+.line-break {
+    height: 0.5em;
+}
+
+/* Code blocks in messages */
+.message-text code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: var(--color-accent-secondary);
+}
+
+/* Bold text */
+.message-text strong {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}

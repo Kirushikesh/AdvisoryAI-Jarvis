@@ -1,0 +1,231 @@
+.dashboard-page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--spacing-xl);
+}
+
+.dashboard-main {
+    min-width: 0;
+}
+
+.dashboard-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* Quick Actions */
+.quick-actions {
+    padding: var(--spacing-lg);
+}
+
+.quick-actions h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.action-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.action-card:hover {
+    background: rgba(99, 102, 241, 0.15);
+    transform: translateX(4px);
+}
+
+.action-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.action-icon svg {
+    width: 22px;
+    height: 22px;
+    color: white;
+}
+
+.chat-icon {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.upload-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.action-info h4 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+}
+
+.action-info p {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+/* Stats Card */
+.stats-card {
+    padding: var(--spacing-lg);
+}
+
+.stats-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--color-accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+/* Agents Card */
+.agents-card {
+    padding: var(--spacing-lg);
+}
+
+.agents-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.agents-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.agent-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.agent-row:hover {
+    background: var(--color-bg-tertiary);
+}
+
+.agent-avatar {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: white;
+}
+
+.agent-avatar.jarvis {
+    background: var(--color-jarvis);
+}
+
+.agent-avatar.atlas {
+    background: var(--color-atlas);
+}
+
+.agent-avatar.emma {
+    background: var(--color-emma);
+}
+
+.agent-avatar.colin {
+    background: var(--color-colin);
+}
+
+.agent-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.agent-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.agent-role {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.agent-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.agent-status-dot.online {
+    background: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-sidebar>* {
+        flex: 1;
+        min-width: 280px;
+    }
+}
