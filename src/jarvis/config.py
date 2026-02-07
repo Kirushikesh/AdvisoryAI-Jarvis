@@ -8,6 +8,7 @@ load_dotenv(find_dotenv(), override=True)
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 WORKSPACE_DIR = BASE_DIR / "workspace"
 DATASETS_DIR = WORKSPACE_DIR / "datasets"
+CLIENT_DATA_PATH = DATASETS_DIR  # Alias for file_monitor tool
 RAW_DATASETS_DIR = BASE_DIR / "raw_datasets"
 SYSTEM_PROMPT_DIR = BASE_DIR / "system_prompt"
 MEMORY_DIR = WORKSPACE_DIR / "memory"
