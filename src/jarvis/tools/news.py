@@ -1,6 +1,9 @@
 from tavily import TavilyClient
 from langchain_core.tools import tool
 import os
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv(find_dotenv(), override=True)
 
 tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
 

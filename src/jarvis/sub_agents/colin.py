@@ -1,4 +1,7 @@
 import os
+from dotenv import find_dotenv, load_dotenv
+load_dotenv(find_dotenv(), override=True)
+
 from langchain.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
