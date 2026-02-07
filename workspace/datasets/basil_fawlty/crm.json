@@ -1,0 +1,138 @@
+{
+  "client_id": "C015",
+  "household": {
+    "primary_client": {
+      "first_name": "Basil",
+      "last_name": "Fawlty",
+      "date_of_birth": "1958-05-19",
+      "age": 67,
+      "ni_number": "JK123456D",
+      "occupation": "Hotel Owner / Operator",
+      "annual_income_gbp": 42500,
+      "contact": {
+        "mobile": "07789 234567",
+        "email": "basil@fawltytowers.co.uk"
+      }
+    },
+    "partner": {
+      "first_name": "Sybil",
+      "last_name": "Fawlty",
+      "date_of_birth": "1960-08-07",
+      "age": 65,
+      "ni_number": "LM654321E",
+      "occupation": "Hotel Owner / Operator",
+      "annual_income_gbp": 42500,
+      "contact": {
+        "mobile": "07734 678901"
+      }
+    },
+    "address": {
+      "line_1": "Fawlty Towers Hotel",
+      "line_2": "Torquay Seafront",
+      "town": "Torquay",
+      "postcode": "TQ1 2BE",
+      "country": "UK"
+    },
+    "dependants": []
+  },
+  "compliance": {
+    "last_review_date": "2026-01-21",
+    "next_review_date": "2027-02-18",
+    "risk_profile": "Moderate",
+    "service_status": "Active"
+  },
+  "financials": {
+    "property": {
+      "hotel_and_residence": {
+        "value_gbp": 1400000,
+        "purchase_year": 1985,
+        "purchase_price_gbp": 95000,
+        "mortgage_balance_gbp": 0,
+        "use": "Trading business with owner accommodation"
+      }
+    },
+    "investments": {
+      "joint_isas": {
+        "provider": "HSBC",
+        "value_gbp": 145000
+      },
+      "premium_bonds": {
+        "value_gbp": 60000
+      },
+      "business_reserves": {
+        "value_gbp": 180000,
+        "notes": "Seasonal cashflow buffer"
+      },
+      "other_assets": {
+        "art_and_antiques": 45000
+      }
+    },
+    "pensions": {
+      "basil": [
+        {
+          "type": "Personal Pension",
+          "provider": "Prudential",
+          "value_gbp": 285000
+        }
+      ],
+      "sybil": [
+        {
+          "type": "Personal Pension",
+          "provider": "Aviva",
+          "value_gbp": 165000
+        }
+      ]
+    },
+    "liabilities": {}
+  },
+  "net_worth_gbp": 2100000,
+  "vulnerabilities": [
+    {
+      "person": "Household",
+      "type": "Age",
+      "description": "Clients aged 67 and 65 approaching full retirement"
+    },
+    {
+      "person": "Basil Fawlty",
+      "type": "Emotional",
+      "description": "Strong emotional attachment to hotel business impacting decision-making"
+    },
+    {
+      "person": "Household",
+      "type": "Situational",
+      "description": "High stress and fatigue linked to prolonged business exit delays"
+    }
+  ],
+  "goals": [
+    {
+      "goal": "Exit hotel business",
+      "target_date": "2027-01-01",
+      "target_amount_gbp": 1200000,
+      "status": "Delayed"
+    },
+    {
+      "goal": "Full retirement",
+      "target_date": "2027-06-01",
+      "target_amount_gbp": 65000,
+      "status": "Pending Exit"
+    },
+    {
+      "goal": "Relocate to Mediterranean climate",
+      "target_date": "2027-06-01",
+      "target_amount_gbp": 120000,
+      "status": "Planned"
+    },
+    {
+      "goal": "Family gifting",
+      "target_date": "2027-12-01",
+      "target_amount_gbp": 60000,
+      "status": "Planned"
+    }
+  ],
+  "planning_notes": {
+    "hotel_sale_expected_range_gbp": "1200000–1300000",
+    "estimated_cgt_gain_gbp": 925000,
+    "estimated_badr_tax_gbp": 92500,
+    "lease_option_income_gbp_per_year": 48000
+  }
+}

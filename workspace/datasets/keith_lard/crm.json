@@ -1,0 +1,162 @@
+{
+    "client_id": "C011",
+    "household": {
+        "primary_client": {
+            "first_name": "Keith",
+            "last_name": "Lard",
+            "date_of_birth": "1960-08-08",
+            "age": 65,
+            "ni_number": "AA123456A",
+            "marital_status": "Married",
+            "occupation": "Management Consultant",
+            "employment_status": "Self-employed (Ltd Company)",
+            "annual_income_gbp": 95000,
+            "retirement_date": "2026-04-01",
+            "contact": {
+                "email": "keith.lard@lardassoc.co.uk",
+                "mobile": "07789 345612"
+            }
+        },
+        "partner": {
+            "first_name": "Maureen",
+            "last_name": "Lard",
+            "date_of_birth": "1962-12-03",
+            "age": 63,
+            "ni_number": "BB654321B",
+            "marital_status": "Married",
+            "occupation": "Retired Primary Teacher",
+            "annual_pension_income_gbp": 22500,
+            "contact": {
+                "mobile": "07734 567823"
+            }
+        },
+        "address": {
+            "line_1": "The Old Rectory",
+            "line_2": "12 Church Lane",
+            "town": "Dorking",
+            "postcode": "RH4 2LP",
+            "country": "UK"
+        },
+        "children": [
+            {
+                "name": "Daniel Lard",
+                "age": 38,
+                "dependants": 3
+            },
+            {
+                "name": "Rebecca Lard",
+                "age": 35,
+                "dependants": 2
+            },
+            {
+                "name": "Lucy Lard",
+                "age": 31,
+                "dependants": 0
+            }
+        ],
+        "grandchildren": 5
+    },
+    "compliance": {
+        "last_review_date": "2026-01-20",
+        "next_review_date": "2027-02-25",
+        "risk_profile": "Cautious / Balanced",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 1200000,
+                "owned_outright": true
+            },
+            "holiday_home": {
+                "location": "Cornwall",
+                "value_gbp": 280000,
+                "net_rental_income_gbp_per_year": 12000,
+                "family_use_weeks_per_year": 6
+            }
+        },
+        "investments": {
+            "isas": {
+                "keith": {
+                    "value_gbp": 425000,
+                    "asset_allocation": "60/40 de-risking"
+                },
+                "maureen": {
+                    "value_gbp": 285000,
+                    "asset_allocation": "50/50"
+                }
+            },
+            "discretionary_portfolio": {
+                "provider": "Brewin Dolphin",
+                "value_gbp": 220000
+            },
+            "cash_savings": {
+                "value_gbp": 180000
+            },
+            "premium_bonds": {
+                "value_gbp": 50000
+            },
+            "company_cash_reserves": {
+                "value_gbp": 180000,
+                "status": "Pending extraction"
+            }
+        },
+        "pensions": {
+            "keith": {
+                "sipp": 780000,
+                "partnership_scheme": 180000
+            },
+            "maureen": {
+                "teachers_pension_income_gbp_per_year": 22500,
+                "sipp": 45000
+            }
+        }
+    },
+    "net_worth_gbp": 3250000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Longevity",
+            "description": "Retirement expected to last 25+ years with future care cost exposure"
+        },
+        {
+            "person": "Household",
+            "type": "Family",
+            "description": "Potential financial support required for adult child during marital breakdown"
+        },
+        {
+            "person": "Household",
+            "type": "Timing",
+            "description": "Company liquidation timing critical for tax efficiency"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Keith retirement",
+            "target_date": "2026-04-01",
+            "status": "Confirmed"
+        },
+        {
+            "goal": "Secure retirement income",
+            "target_amount_gbp": 75000,
+            "status": "On Track"
+        },
+        {
+            "goal": "World cruise",
+            "target_date": "2027-01-01",
+            "target_amount_gbp": 55000,
+            "status": "Booked"
+        },
+        {
+            "goal": "Grandchildren gifting",
+            "target_amount_gbp": 50000,
+            "status": "Agreed"
+        }
+    ],
+    "planning_notes": {
+        "recommended_company_extraction": "£180k employer pension contribution (carry-forward)",
+        "drawdown_required_gbp_per_year": 29500,
+        "holiday_home_recommendation": "Keep for now; review in 2–3 years",
+        "inheritance_target_gbp": 1500000
+    }
+}

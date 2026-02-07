@@ -1,0 +1,151 @@
+{
+  "client_id": "C010",
+  "household": {
+    "primary_client": {
+      "first_name": "Antony",
+      "last_name": "Makepeace",
+      "date_of_birth": "1991-05-26",
+      "age": 34,
+      "ni_number": "EF345678A",
+      "occupation": "Fashion Buyer",
+      "employer": "Luxury Retail",
+      "annual_income_gbp": 75000,
+      "income_breakdown": {
+        "salary": 65000,
+        "bonus": 10000
+      },
+      "contact": {
+        "mobile": "07712 567890",
+        "email": "antony.makepeace@fashionhq.com"
+      }
+    },
+    "partner": {
+      "first_name": "Beverley",
+      "last_name": "Makepeace",
+      "date_of_birth": "1989-09-14",
+      "age": 36,
+      "ni_number": "GH987654B",
+      "occupation": "Creative Director",
+      "employment_status": "Self-employed (Ltd Company)",
+      "annual_income_gbp": 85000,
+      "income_breakdown": {
+        "salary": 70000,
+        "dividends": 15000
+      },
+      "contact": {
+        "mobile": "07823 678901",
+        "email": "beverley.makepeace@creativeagency.com"
+      }
+    },
+    "relationship_status": {
+      "marital_status": "Unmarried",
+      "engaged": true,
+      "engagement_date": "2024-10-01",
+      "wedding_planned": "2026-09-01"
+    },
+    "address": {
+      "line_1": "Flat 8, Riverside Heights",
+      "town": "Kingston",
+      "postcode": "KT2 5BQ",
+      "country": "UK"
+    },
+    "dependants": []
+  },
+  "compliance": {
+    "last_review_date": "2026-01-17",
+    "next_review_date": "2027-03-10",
+    "risk_profile": "Balanced",
+    "service_status": "Active"
+  },
+  "financials": {
+    "property": {
+      "current_status": "Renting",
+      "rent_gbp_per_month": 2200
+    },
+    "investments": {
+      "isas": {
+        "antony": {
+          "provider": "Vanguard",
+          "value_gbp": 48000
+        },
+        "beverley": {
+          "provider": "AJ Bell",
+          "value_gbp": 62000
+        }
+      },
+      "savings": {
+        "antony": 25000,
+        "beverley": 18000,
+        "joint_emergency_fund": 15000
+      }
+    },
+    "pensions": {
+      "antony": [
+        {
+          "type": "Workplace Pension",
+          "provider": "Standard Life",
+          "value_gbp": 68000
+        }
+      ],
+      "beverley": [
+        {
+          "type": "SIPP",
+          "provider": "AJ Bell",
+          "value_gbp": 95000
+        }
+      ]
+    },
+    "business_assets": {
+      "beverley_ltd_cash_reserves": 35000
+    },
+    "liabilities": {}
+  },
+  "net_worth_gbp": 520000,
+  "vulnerabilities": [
+    {
+      "person": "Household",
+      "type": "Legal",
+      "description": "Unmarried couple with joint financial plans and no legal protections in place"
+    },
+    {
+      "person": "Beverley Makepeace",
+      "type": "Financial",
+      "description": "Self-employed with income volatility and no income protection"
+    }
+  ],
+  "goals": [
+    {
+      "goal": "Purchase first home",
+      "target_date": "2026-06-01",
+      "target_amount_gbp": 60000,
+      "status": "On Track"
+    },
+    {
+      "goal": "Wedding",
+      "target_date": "2026-09-01",
+      "target_amount_gbp": 35000,
+      "status": "On Track"
+    },
+    {
+      "goal": "Early retirement",
+      "target_date": "2046-01-01",
+      "target_amount_gbp": 60000,
+      "status": "Under Modelling"
+    },
+    {
+      "goal": "Start family",
+      "target_date": "2027-01-01",
+      "target_amount_gbp": null,
+      "status": "Planned"
+    }
+  ],
+  "planning_notes": {
+    "house_purchase_target_gbp": 550000,
+    "deposit_split": {
+      "antony": 25000,
+      "beverley": 30000
+    },
+    "recommended_employer_pension_contribution_beverley_gbp": 20000,
+    "wedding_savings_rate_gbp_per_month": 1500
+  }
+}

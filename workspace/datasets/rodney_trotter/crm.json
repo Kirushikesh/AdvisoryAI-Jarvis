@@ -1,0 +1,139 @@
+{
+    "client_id": "C014",
+    "household": {
+        "primary_client": {
+            "first_name": "Rodney",
+            "last_name": "Trotter",
+            "date_of_birth": "1990-02-26",
+            "age": 35,
+            "ni_number": "JL123456C",
+            "occupation": "Import / Export Trader",
+            "employment_status": "Self-employed (Ltd Company)",
+            "annual_income_gbp": 70000,
+            "income_breakdown": {
+                "salary": 52000,
+                "dividends": 18000
+            },
+            "contact": {
+                "mobile": "07823 456789",
+                "email": "rodney.trotter@tradingcollective.com"
+            }
+        },
+        "partner": {
+            "first_name": "Cassandra",
+            "last_name": "Trotter",
+            "date_of_birth": "1991-09-18",
+            "age": 34,
+            "ni_number": "KM654321D",
+            "occupation": "Bank Manager",
+            "employer": "High Street Bank",
+            "annual_income_gbp": 56000,
+            "contact": {
+                "mobile": "07734 567890",
+                "email": "cass.trotter@citybank.co.uk"
+            }
+        },
+        "children": [
+            {
+                "name": "Joan Trotter",
+                "date_of_birth": "2020-11-05"
+            },
+            {
+                "name": "Damien Trotter",
+                "date_of_birth": "2023-01-19"
+            }
+        ],
+        "address": {
+            "line_1": "45 Nelson Mandela House",
+            "town": "Peckham",
+            "postcode": "SE15 3BN",
+            "country": "UK",
+            "housing_status": "Renting"
+        }
+    },
+    "compliance": {
+        "last_review_date": "2026-01-19",
+        "next_review_date": "2027-03-12",
+        "risk_profile": "Balanced",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "current_rent_gbp_per_month": 1650,
+            "target_purchase_price_gbp": 420000,
+            "deposit_target_gbp": 50000
+        },
+        "investments": {
+            "isas": {
+                "rodney": 18000,
+                "cassandra": 42000
+            },
+            "joint_savings": 38000,
+            "junior_isas": 4000
+        },
+        "pensions": {
+            "cassandra": {
+                "workplace_pension_gbp": 85000
+            },
+            "rodney": {
+                "sipp_gbp": 22000
+            }
+        },
+        "business_assets": {
+            "company_reserves_gbp": 55000
+        },
+        "liabilities": {
+            "directors_loan_overdrawn_gbp": 12000,
+            "personal_loan_gbp": 8000,
+            "personal_loan_interest_percent": 9.8
+        }
+    },
+    "net_worth_gbp": 238000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Family Stress",
+            "description": "Marital tension driven by financial volatility and housing pressure"
+        },
+        {
+            "person": "Rodney Trotter",
+            "type": "Financial Behaviour",
+            "description": "Pattern of debt accumulation linked to optimistic business decisions"
+        },
+        {
+            "person": "Household",
+            "type": "Protection",
+            "description": "No income protection for self-employed primary risk-taker with dependants"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Purchase family home",
+            "target_date": "2026-06-01",
+            "target_amount_gbp": 420000,
+            "status": "Delayed but In Progress"
+        },
+        {
+            "goal": "Clear Rodney’s debts",
+            "target_date": "2026-12-01",
+            "target_amount_gbp": 20000,
+            "status": "In Progress"
+        },
+        {
+            "goal": "Stabilise household finances",
+            "target_date": "2026-01-01",
+            "status": "Critical"
+        },
+        {
+            "goal": "Consider third child",
+            "target_date": "2027-01-01",
+            "status": "Deferred"
+        }
+    ],
+    "planning_notes": {
+        "director_loan_solution": "Declare £12k dividend to clear loan and avoid S455 tax",
+        "deposit_saving_rate_gbp_per_month": 1000,
+        "recommended_salary_change": "Increase Rodney salary to £60k for mortgage strength",
+        "business_coaching_declined": true
+    }
+}

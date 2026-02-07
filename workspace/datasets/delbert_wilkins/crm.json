@@ -1,0 +1,149 @@
+{
+    "client_id": "C017",
+    "household": {
+        "primary_client": {
+            "first_name": "Delbert",
+            "last_name": "Wilkins",
+            "known_as": "Del",
+            "date_of_birth": "1962-12-12",
+            "age": 62,
+            "ni_number": "ZZ123456Z",
+            "marital_status": "Divorced",
+            "occupation": "Business Consultant / Non-Executive Director",
+            "employment_status": "Semi-retired",
+            "annual_income_gbp": 180000,
+            "income_breakdown": {
+                "salary": 120000,
+                "dividends_and_fees": 60000
+            },
+            "contact": {
+                "mobile": "07700 900123",
+                "email": "del.wilkins@dwconsulting.com"
+            }
+        },
+        "address": {
+            "line_1": "Penthouse, Riverside Quarter",
+            "area": "Canary Wharf",
+            "postcode": "E14 8QS",
+            "country": "UK"
+        },
+        "children": [
+            {
+                "name": "Damien Wilkins",
+                "date_of_birth": "2001-02-14",
+                "age": 24,
+                "status": "Final year university student",
+                "trust_fund_gbp": 180000,
+                "trust_vesting_date": "2026-02-14"
+            }
+        ],
+        "relationships": {
+            "former_spouse": "Raquel Wilkins",
+            "current_partner": {
+                "name": "Marlene",
+                "status": "Dating (8 months)",
+                "financially_independent": true
+            }
+        }
+    },
+    "compliance": {
+        "last_review_date": "2025-01-23",
+        "next_review_date": "2025-03-20",
+        "risk_profile": "Adventurous",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "uk_residence": {
+                "description": "Penthouse apartment",
+                "value_gbp": 1850000,
+                "purchase_year": 2020,
+                "purchase_price_gbp": 1650000,
+                "mortgage": {
+                    "balance_gbp": 450000,
+                    "interest_rate_percent": 3.8,
+                    "fixed_until": "2027-01-01",
+                    "monthly_payment_gbp": 2400
+                }
+            },
+            "overseas_property": {
+                "description": "Spanish villa, Marbella",
+                "value_gbp": 850000,
+                "mortgage_balance_gbp": 0,
+                "rental_income_gbp_per_year": 42000
+            }
+        },
+        "investments": {
+            "isas": {
+                "value_gbp": 680000,
+                "asset_allocation": "80% equities / 20% bonds"
+            },
+            "pensions": {
+                "sipp": 1150000,
+                "defined_benefit": {
+                    "provider": "Shell",
+                    "income_gbp_per_year_from_65": 32000
+                }
+            },
+            "cash": {
+                "savings": 240000,
+                "business_reserves": 420000
+            },
+            "speculative_assets": {
+                "bitcoin": 120000
+            },
+            "collectibles": {
+                "wine": 45000,
+                "art": 60000,
+                "vehicle": {
+                    "model": "Porsche 911 (2021)",
+                    "value_gbp": 85000
+                }
+            }
+        },
+        "liabilities": {
+            "spousal_maintenance_gbp_per_month": 2500,
+            "maintenance_end_date": "2027-12-01",
+            "son_support_gbp_per_month": 1800
+        }
+    },
+    "net_worth_gbp": 4800000,
+    "vulnerabilities": [
+        {
+            "person": "Delbert Wilkins",
+            "type": "Emotional",
+            "description": "Post-divorce financial defensiveness and asset-protection bias"
+        },
+        {
+            "person": "Household",
+            "type": "Family",
+            "description": "Strained relationship with adult son and upcoming trust vesting risk"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Full retirement",
+            "target_date": "2029-01-01",
+            "target_amount_gbp": 120000,
+            "status": "On Track"
+        },
+        {
+            "goal": "Spanish villa decision",
+            "target_date": "2026-01-01",
+            "target_amount_gbp": null,
+            "status": "Under Review"
+        },
+        {
+            "goal": "Support son post-graduation",
+            "target_date": "2026-02-14",
+            "target_amount_gbp": null,
+            "status": "Sensitive"
+        }
+    ],
+    "planning_notes": {
+        "maintenance_end_savings_gbp_per_year": 30000,
+        "recommended_bitcoin_action": "Sell £80k profit, retain £40k",
+        "recommended_villa_action": "Sell post-maintenance for simplicity",
+        "cohabitation_agreement_required": true
+    }
+}

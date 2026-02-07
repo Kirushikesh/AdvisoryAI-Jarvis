@@ -1,0 +1,177 @@
+{
+    "client_id": "C006",
+    "household": {
+        "primary_client": {
+            "first_name": "Robert",
+            "last_name": "Hughes",
+            "date_of_birth": "1968-04-07",
+            "age": 57,
+            "ni_number": "QH123456D",
+            "marital_status": "Married",
+            "occupation": "Equity Partner",
+            "employer": "RGH Legal",
+            "specialism": "Commercial Property",
+            "annual_income_gbp": 165000,
+            "planned_retirement_age": 60,
+            "contact": {
+                "mobile": "07891 345678",
+                "email": "robert.hughes@rghlegal.com"
+            }
+        },
+        "partner": {
+            "first_name": "Jennifer",
+            "last_name": "Hughes",
+            "date_of_birth": "1969-08-12",
+            "age": 56,
+            "marital_status": "Married",
+            "occupation": "Retired Teacher",
+            "retirement_date": "2024-08-01",
+            "pension_income_future": {
+                "scheme": "Teachers’ Pension",
+                "income_gbp_per_year": 28000,
+                "start_year": 2029
+            },
+            "contact": {
+                "mobile": "07734 876543"
+            }
+        },
+        "address": {
+            "line_1": "Meadow House",
+            "line_2": "15 Green Lane",
+            "town": "Godalming",
+            "postcode": "GU7 3NR",
+            "country": "UK"
+        },
+        "children": [
+            {
+                "name": "Tom Hughes",
+                "age": 29,
+                "marital_status": "Married",
+                "children": 1,
+                "second_child_due": "2025-07-01"
+            },
+            {
+                "name": "Lucy Hughes",
+                "age": 26,
+                "location": "Australia",
+                "status": "Sponsored visa; long-term stay likely"
+            }
+        ]
+    },
+    "compliance": {
+        "last_review_date": "2026-01-20",
+        "next_review_date": "2027-02-05",
+        "risk_profile": "Balanced / Cautious",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "location": "Godalming",
+                "value_gbp": 850000,
+                "mortgage_balance_gbp": 0
+            },
+            "buy_to_let_1": {
+                "location": "Guildford",
+                "value_gbp": 420000,
+                "mortgage_balance_gbp": 85000,
+                "interest_rate_percent": 2.45,
+                "rate_expiry": "2025-08-01",
+                "rent_gbp_per_month": 1650
+            },
+            "buy_to_let_2": {
+                "location": "Woking",
+                "value_gbp": 390000,
+                "mortgage_balance_gbp": 0,
+                "rent_gbp_per_month": 1550
+            }
+        },
+        "investments": {
+            "isas": {
+                "robert": 245000,
+                "jennifer": 180000
+            },
+            "savings": 85000,
+            "premium_bonds": 50000,
+            "managed_portfolio": {
+                "provider": "Charles Stanley",
+                "value_gbp": 220000,
+                "annual_charge_percent": 1.6
+            },
+            "trusts_for_children": {
+                "tom": 40000,
+                "lucy": 40000,
+                "status": "Vested"
+            },
+            "collectibles": {
+                "classic_cars": 45000
+            }
+        },
+        "pensions": {
+            "robert": {
+                "sipp": 520000,
+                "partnership_scheme": 180000,
+                "current_contribution_gbp_per_year": 25000
+            },
+            "jennifer": {
+                "teachers_pension_gbp_per_year_from_2029": 28000,
+                "sipp": 65000
+            }
+        }
+    },
+    "net_worth_gbp": 2450000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Estate Planning",
+            "description": "Significant IHT exposure (~£580k) with outdated wills and missing LPAs for Robert"
+        },
+        {
+            "person": "Robert Hughes",
+            "type": "Capacity",
+            "description": "Highly work-focused; difficult to engage and delays critical actions"
+        },
+        {
+            "person": "Household",
+            "type": "Tax",
+            "description": "BTL income highly tax inefficient at higher/additional rates"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Robert retirement",
+            "target_date": "2028-01-01",
+            "target_income_gbp_per_year": 80000,
+            "status": "In Progress"
+        },
+        {
+            "goal": "World cruise",
+            "target_date": "2026-01-01",
+            "target_amount_gbp": 35000,
+            "status": "Booked"
+        },
+        {
+            "goal": "Gift Tom house deposit",
+            "target_date": "2026-12-01",
+            "target_amount_gbp": 75000,
+            "status": "Pending Purchase"
+        },
+        {
+            "goal": "Support Lucy (Australia)",
+            "target_amount_gbp_per_year": 8000,
+            "status": "Ongoing"
+        },
+        {
+            "goal": "Downsize property",
+            "target_amount_gbp_release": 200000,
+            "status": "Future Option"
+        }
+    ],
+    "planning_notes": {
+        "partnership_exit_buyout_gbp": 280000,
+        "buyout_schedule": "£70k/year over 4 years",
+        "btl1_recommendation": "Sell post-2025; reinvest proceeds",
+        "iht_mitigation_priority": "LPAs, updated wills, gifting strategy",
+        "charles_stanley_fee_drag_gbp_per_year": 2720
+    }
+}

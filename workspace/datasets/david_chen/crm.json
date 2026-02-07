@@ -1,0 +1,167 @@
+{
+    "client_id": "C003",
+    "household": {
+        "primary_client": {
+            "first_name": "David",
+            "last_name": "Chen",
+            "date_of_birth": "1975-06-12",
+            "age": 49,
+            "ni_number": "NX123456D",
+            "occupation": "Investment Banking Director",
+            "employer": "Goldman Sachs",
+            "annual_income_gbp": 245000,
+            "income_breakdown": {
+                "salary": 185000,
+                "average_bonus": 60000
+            },
+            "contact": {
+                "email": "david.chen@globalbank.com",
+                "mobile": "07789 234567"
+            }
+        },
+        "partner": {
+            "first_name": "Sarah",
+            "last_name": "Chen",
+            "date_of_birth": "1977-11-08",
+            "age": 47,
+            "ni_number": "NY654321E",
+            "occupation": "Senior Manager",
+            "employer": "Arts Council England",
+            "working_pattern": "4 days per week",
+            "annual_income_gbp": 72000,
+            "contact": {
+                "email": "sarah.chen@artscouncil.org.uk",
+                "mobile": "07823 345678"
+            }
+        },
+        "children": [
+            {
+                "name": "Oliver Chen",
+                "date_of_birth": "2008-03-14",
+                "school": "Westminster School"
+            },
+            {
+                "name": "Sophie Chen",
+                "date_of_birth": "2011-09-22",
+                "school": "Westminster School"
+            }
+        ],
+        "address": {
+            "line_1": "28 Riverside Court",
+            "town": "Richmond",
+            "postcode": "TW9 1PQ",
+            "country": "UK"
+        }
+    },
+    "compliance": {
+        "last_review_date": "2025-01-15",
+        "next_review_date": "2026-02-18",
+        "risk_profile": "Balanced / Growth",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 1650000,
+                "purchase_year": 2011,
+                "purchase_price_gbp": 980000,
+                "mortgage": {
+                    "balance_gbp": 285000,
+                    "interest_rate_percent": 2.89,
+                    "fixed_until": "2026-05-01",
+                    "monthly_payment_gbp": 2650,
+                    "term_remaining_years": 11
+                }
+            }
+        },
+        "investments": {
+            "isas": {
+                "david": 185400,
+                "sarah": 142800
+            },
+            "cash": {
+                "savings": 125000,
+                "premium_bonds": 50000
+            },
+            "junior_isas": {
+                "oliver": 28400,
+                "sophie": 22100
+            },
+            "other_assets": {
+                "wine_collection": 45000,
+                "share_options_vested": 95000,
+                "share_options_unvested": 140000
+            }
+        },
+        "pensions": {
+            "david": [
+                {
+                    "type": "Workplace Pension",
+                    "provider": "Goldman Sachs",
+                    "value_gbp": 680000
+                },
+                {
+                    "type": "SIPP",
+                    "provider": "Goldman Sachs",
+                    "value_gbp": 145000
+                }
+            ],
+            "sarah": [
+                {
+                    "type": "Defined Benefit",
+                    "provider": "LGPS",
+                    "accrued_income_gbp_per_year": 22000
+                },
+                {
+                    "type": "SIPP",
+                    "provider": "Aviva",
+                    "value_gbp": 34000
+                }
+            ]
+        }
+    },
+    "net_worth_gbp": 2850000,
+    "vulnerabilities": [
+        {
+            "person": "David Chen",
+            "type": "Occupational",
+            "description": "Extremely high workload and stress with potential career change risk"
+        },
+        {
+            "person": "Household",
+            "type": "Cashflow",
+            "description": "Very high fixed commitments from school fees (£72k/year)"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Early retirement",
+            "target_date": "2034-01-01",
+            "target_amount_gbp": 120000,
+            "status": "On Track"
+        },
+        {
+            "goal": "French property purchase",
+            "target_date": "2028-01-01",
+            "target_amount_gbp": 400000,
+            "status": "In Progress"
+        },
+        {
+            "goal": "University funding",
+            "target_date": "2026-01-01",
+            "target_amount_gbp": 80000,
+            "status": "Planned"
+        },
+        {
+            "goal": "Children house deposits",
+            "target_date": null,
+            "target_amount_gbp": 200000,
+            "status": "Long Term"
+        }
+    ],
+    "planning_notes": {
+        "recommended_vct_contribution_gbp": 30000,
+        "recommended_equity_de_risk_age": 55,
+        "expected_school_fees_end_year": 2031
+    }
+}

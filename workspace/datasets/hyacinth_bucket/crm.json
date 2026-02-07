@@ -1,0 +1,144 @@
+{
+    "client_id": "C018",
+    "household": {
+        "primary_clients": [
+            {
+                "first_name": "Hyacinth",
+                "last_name": "Bucket",
+                "preferred_pronunciation": "Bouquet",
+                "date_of_birth": "1952-06-09",
+                "age": 73,
+                "ni_number": "AB987654C",
+                "marital_status": "Married",
+                "occupation": "Retired",
+                "contact": {
+                    "email": "hyacinth.bucket@talktalk.net",
+                    "mobile": "07891 345678"
+                }
+            },
+            {
+                "first_name": "Richard",
+                "last_name": "Bucket",
+                "date_of_birth": "1950-11-22",
+                "age": 75,
+                "ni_number": "CD123456D",
+                "marital_status": "Married",
+                "occupation": "Retired (Former Local Council Planning Officer)",
+                "annual_pension_income_gbp": 18500,
+                "contact": {
+                    "mobile": "07734 456789"
+                }
+            }
+        ],
+        "address": {
+            "line_1": "The Laurels",
+            "line_2": "Blossom Avenue",
+            "town": "Windsor",
+            "postcode": "SL4 3QT",
+            "country": "UK"
+        },
+        "dependants": [
+            {
+                "name": "Sheridan Bucket",
+                "age": 45,
+                "status": "Financially dependent adult child",
+                "notes": "Ongoing ad-hoc financial support; historic £25k unrepaid"
+            }
+        ]
+    },
+    "compliance": {
+        "last_review_date": "2026-01-24",
+        "next_review_date": "2027-03-19",
+        "risk_profile": "Cautious",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 485000,
+                "purchase_year": 1982,
+                "purchase_price_gbp": 38000,
+                "mortgage_balance_gbp": 0
+            }
+        },
+        "income": {
+            "richard_state_pension_gbp_per_year": 11500,
+            "hyacinth_state_pension_gbp_per_year": 7500,
+            "richard_private_pension_gbp_per_year": 18500
+        },
+        "investments": {
+            "isas": {
+                "hyacinth": 58000,
+                "richard": 42000
+            },
+            "savings": {
+                "joint": 68000
+            },
+            "pension_drawdown": {
+                "richard_remaining": 45000
+            },
+            "premium_bonds": {
+                "value_gbp": 30000
+            },
+            "other_assets": {
+                "china_and_crystal": 12000,
+                "shed_tools": 2000,
+                "sheridan_loan_unrepaid": 25000
+            }
+        },
+        "liabilities": {}
+    },
+    "net_worth_gbp": 625000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Age",
+            "description": "Clients aged 73 and 75 with no LPAs or updated wills"
+        },
+        {
+            "person": "Household",
+            "type": "Financial",
+            "description": "Spending matched tightly to income with no savings buffer"
+        },
+        {
+            "person": "Household",
+            "type": "Family",
+            "description": "Ongoing financial dependency from adult child"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Maintain lifestyle",
+            "target_date": null,
+            "target_amount_gbp": 3200,
+            "status": "Under Pressure"
+        },
+        {
+            "goal": "Support Sheridan",
+            "target_date": null,
+            "target_amount_gbp": null,
+            "status": "Unbounded"
+        },
+        {
+            "goal": "Replace car",
+            "target_date": "2027-01-01",
+            "target_amount_gbp": 35000,
+            "status": "Unrealistic"
+        },
+        {
+            "goal": "Mediterranean cruise",
+            "target_date": "2027-01-01",
+            "target_amount_gbp": null,
+            "status": "Aspirational"
+        }
+    ],
+    "planning_notes": {
+        "recommended_car_budget_gbp": 18000,
+        "critical_actions": [
+            "LPAs",
+            "Will update",
+            "Sheridan support boundaries"
+        ],
+        "savings_runway_risk": "Depletion projected early 2030s without change"
+    }
+}

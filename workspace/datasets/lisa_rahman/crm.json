@@ -1,0 +1,154 @@
+{
+    "client_id": "C008",
+    "household": {
+        "primary_client": {
+            "first_name": "Lisa",
+            "last_name": "Rahman",
+            "date_of_birth": "1988-11-03",
+            "age": 37,
+            "occupation": "Digital Marketing Manager",
+            "employer": "BrandBoost",
+            "annual_income_gbp": 58000,
+            "contact": {
+                "mobile": "07834 234567",
+                "email": "lisa.rahman@digitalmarketing.co.uk"
+            }
+        },
+        "partner": {
+            "first_name": "Ahmed",
+            "last_name": "Rahman",
+            "date_of_birth": "1986-06-18",
+            "age": 39,
+            "occupation": "Civil Engineer",
+            "employer": "Surrey County Council",
+            "annual_income_gbp": 52000,
+            "contact": {
+                "mobile": "07789 456789"
+            }
+        },
+        "children": [
+            {
+                "name": "Amelia Rahman",
+                "date_of_birth": "2021-08-22"
+            },
+            {
+                "name": "Second Child Rahman",
+                "date_of_birth": "2025-05-01"
+            }
+        ],
+        "address": {
+            "line_1": "67 Cherry Tree Road",
+            "town": "Epsom",
+            "postcode": "KT19 8QR",
+            "country": "UK"
+        },
+        "household_notes": {
+            "religion": "Muslim",
+            "scheduling_consideration": "Avoid meetings during Ramadan evenings"
+        }
+    },
+    "compliance": {
+        "last_review_date": "2026-01-25",
+        "next_review_date": "2027-03-15",
+        "risk_profile": "Balanced",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 475000,
+                "purchase_year": 2019,
+                "purchase_price_gbp": 395000,
+                "mortgage": {
+                    "balance_gbp": 298000,
+                    "interest_rate_percent": 4.15,
+                    "fixed_until": "2027-12-01",
+                    "monthly_payment_gbp": 1785,
+                    "term_remaining_years": 23
+                }
+            }
+        },
+        "investments": {
+            "isas": {
+                "lisa": 22400,
+                "ahmed": 18600
+            },
+            "cash": {
+                "emergency_fund_gbp": 28000,
+                "target_emergency_fund_gbp": 35000,
+                "monthly_contribution_gbp": 300
+            },
+            "junior_isa": {
+                "amelia": 6400
+            }
+        },
+        "pensions": {
+            "lisa": {
+                "workplace_pension_value_gbp": 42000
+            },
+            "ahmed": {
+                "lgps_accrued_income_gbp_per_year": 8200,
+                "sipp_value_gbp": 15000
+            }
+        },
+        "protection": {
+            "life_cover": {
+                "each_gbp": 300000,
+                "in_trust": true,
+                "term_end_year": 2044
+            },
+            "critical_illness": {
+                "status": "Not in place",
+                "quoted_monthly_gbp": 135
+            }
+        }
+    },
+    "net_worth_gbp": 485000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Cashflow",
+            "description": "Dual childcare costs creating short-term surplus erosion"
+        },
+        {
+            "person": "Lisa Rahman",
+            "type": "Emotional",
+            "description": "High financial anxiety despite fundamentally stable position"
+        },
+        {
+            "person": "Household",
+            "type": "Protection",
+            "description": "No critical illness cover with young children and mortgage"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Increase emergency fund",
+            "target_date": "2026-08-01",
+            "target_amount_gbp": 35000,
+            "status": "In Progress"
+        },
+        {
+            "goal": "Retire",
+            "target_date": "2053-01-01",
+            "target_amount_gbp": 55000,
+            "status": "On Track"
+        },
+        {
+            "goal": "House extension",
+            "target_date": "2029-01-01",
+            "target_amount_gbp": 65000,
+            "status": "Deferred"
+        }
+    ],
+    "planning_notes": {
+        "childcare_costs_gbp_per_month": 2400,
+        "tax_free_childcare_saving_gbp_per_year": 5760,
+        "recommended_focus_2026": [
+            "Cashflow stability",
+            "Emergency fund rebuild",
+            "Wills completion",
+            "Critical illness decision"
+        ]
+    }
+}

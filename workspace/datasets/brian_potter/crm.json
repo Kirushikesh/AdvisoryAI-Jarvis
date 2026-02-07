@@ -1,0 +1,133 @@
+{
+    "client_id": "C009",
+    "household": {
+        "primary_client": {
+            "first_name": "Brian",
+            "last_name": "Potter",
+            "date_of_birth": "1957-04-11",
+            "age": 68,
+            "ni_number": "TT123456A",
+            "marital_status": "Widowed",
+            "occupation": "Retired",
+            "former_employer": "BAE Systems",
+            "retirement_date": "2022-04-01",
+            "contact": {
+                "mobile": "07756 432198",
+                "email": "brian.potter47@gmail.com"
+            }
+        },
+        "address": {
+            "line_1": "22 Willow Close",
+            "town": "Guildford",
+            "postcode": "GU2 9SD",
+            "country": "UK"
+        },
+        "children": [
+            {
+                "name": "Sarah Potter",
+                "age": 39,
+                "marital_status": "Married",
+                "dependants": 2
+            },
+            {
+                "name": "Andrew Potter",
+                "age": 36,
+                "marital_status": "Single",
+                "location": "Edinburgh"
+            }
+        ]
+    },
+    "compliance": {
+        "last_review_date": "2026-01-23",
+        "next_review_date": "2027-02-14",
+        "risk_profile": "Cautious",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 625000,
+                "purchase_year": 1991,
+                "purchase_price_gbp": 145000,
+                "mortgage_balance_gbp": 0
+            }
+        },
+        "income": {
+            "bae_db_pension_gbp_per_year": 38900,
+            "state_pension_gbp_per_year": 11500,
+            "investment_income_gbp_per_year": 2000
+        },
+        "investments": {
+            "isas": {
+                "brian": {
+                    "value_gbp": 285000,
+                    "asset_allocation": "40% equities / 60% bonds"
+                },
+                "margaret_inherited": {
+                    "value_gbp": 47000,
+                    "status": "Pending spousal transfer"
+                }
+            },
+            "cash": {
+                "savings_accounts": 95000,
+                "premium_bonds": 50000
+            },
+            "investment_platforms": {
+                "hargreaves_lansdown": 48000
+            },
+            "other_assets": {
+                "family_heirlooms": 15000
+            }
+        },
+        "liabilities": {}
+    },
+    "net_worth_gbp": 1150000,
+    "vulnerabilities": [
+        {
+            "person": "Brian Potter",
+            "type": "Bereavement",
+            "description": "Widowed December 2022; ongoing grief and emotional hesitation"
+        },
+        {
+            "person": "Brian Potter",
+            "type": "Health",
+            "description": "Arthritis in knees; monitored cardiac condition"
+        },
+        {
+            "person": "Household",
+            "type": "Situational",
+            "description": "Loneliness and financial overwhelm following spouse's death"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Downsize property",
+            "target_date": null,
+            "target_amount_gbp": 450000,
+            "status": "Exploring"
+        },
+        {
+            "goal": "Support daughter financially",
+            "target_date": "2026-06-01",
+            "target_amount_gbp": 30000,
+            "status": "Under Consideration"
+        },
+        {
+            "goal": "Leave inheritance",
+            "target_date": null,
+            "target_amount_gbp": 600000,
+            "status": "Planned"
+        },
+        {
+            "goal": "Increase travel",
+            "target_date": "2026-09-01",
+            "target_amount_gbp": 16000,
+            "status": "Planned"
+        }
+    ],
+    "planning_notes": {
+        "recommended_sarah_support_option": "Gift £30k with transparency to Andrew",
+        "downsizing_equity_release_estimate_gbp": 150000,
+        "excess_cash_available_for_investment_gbp": 115000
+    }
+}

@@ -1,0 +1,157 @@
+{
+  "client_id": "C0XX",
+  "household": {
+    "primary_client": {
+      "first_name": "Sarah",
+      "last_name": "Thompson",
+      "date_of_birth": "1978-03-12",
+      "age": 46,
+      "ni_number": "AB123456C",
+      "occupation": "Senior Marketing Manager",
+      "employer": "Unilever UK Ltd",
+      "employment_status": "Permanent, Full-time",
+      "annual_income_gbp": 103000,
+      "income_breakdown": {
+        "salary": 85000,
+        "bonus": 12000,
+        "car_allowance": 6000
+      },
+      "contact": {
+        "email": "sarah.thompson@gmail.com",
+        "mobile": "07712 345678"
+      }
+    },
+    "partner": {
+      "first_name": "Michael",
+      "last_name": "Thompson",
+      "date_of_birth": "1976-07-24",
+      "age": 48,
+      "ni_number": "CD789012D",
+      "occupation": "Associate Architect",
+      "employer": "Sterling Architects Ltd",
+      "employment_status": "Permanent, Full-time",
+      "annual_income_gbp": 76000,
+      "income_breakdown": {
+        "salary": 72000,
+        "bonus": 4000
+      },
+      "contact": {
+        "email": "m.thompson@architectsltd.co.uk",
+        "mobile": "07823 456789"
+      }
+    },
+    "children": [
+      { "name": "Emily Thompson", "date_of_birth": "2010-06-18" },
+      { "name": "Oliver Thompson", "date_of_birth": "2013-09-03" }
+    ],
+    "address": {
+      "line_1": "47 Meadowbrook Lane",
+      "town": "Weybridge",
+      "county": "Surrey",
+      "postcode": "KT13 9PL",
+      "country": "UK"
+    }
+  },
+  "compliance": {
+    "last_review_date": "2024-11-15",
+    "next_review_date": "2025-11-01",
+    "risk_profile": "Balanced / Growth",
+    "service_status": "Active"
+  },
+  "financials": {
+    "property": {
+      "main_residence": {
+        "value_gbp": 875000,
+        "purchase_price_gbp": 495000,
+        "purchase_year": 2012,
+        "mortgage": {
+          "provider": "Nationwide",
+          "balance_gbp": 287000,
+          "interest_rate_percent": 3.89,
+          "fixed_until": "2026-03-01",
+          "term_remaining_years": 14,
+          "monthly_payment_gbp": 1850
+        }
+      }
+    },
+    "investments": {
+      "isas": {
+        "sarah": 47320,
+        "michael": 38650
+      },
+      "cash_savings": {
+        "joint_easy_access": 22500,
+        "joint_notice": 15000
+      },
+      "premium_bonds": {
+        "sarah": 10000,
+        "michael": 5000
+      },
+      "junior_isas": {
+        "emily": 18400,
+        "oliver": 14200
+      }
+    },
+    "pensions": {
+      "sarah": [
+        {
+          "type": "Defined Benefit",
+          "provider": "Unilever UK Pension Scheme",
+          "projected_income_gbp_per_year": 28000,
+          "normal_retirement_age": 65,
+          "transfer_value_gbp": 412000
+        },
+        {
+          "type": "SIPP",
+          "provider": "Aviva",
+          "value_gbp": 87400
+        }
+      ],
+      "michael": [
+        {
+          "type": "Workplace Pension",
+          "provider": "Scottish Widows",
+          "value_gbp": 156800
+        },
+        {
+          "type": "Deferred Pensions",
+          "providers": ["Standard Life", "Aegon"],
+          "value_gbp": 42500
+        }
+      ]
+    }
+  },
+  "net_worth_gbp": 1099770,
+  "vulnerabilities": [
+    {
+      "person": "Michael Thompson",
+      "type": "Health",
+      "description": "Hypertension with family history of cardiac illness"
+    },
+    {
+      "person": "Household",
+      "type": "Dependants",
+      "description": "Two children with long-term university funding requirement"
+    }
+  ],
+  "goals": [
+    {
+      "goal": "Retirement",
+      "target_date": "2038-01-01",
+      "target_amount_gbp": 50000,
+      "status": "Under Review"
+    },
+    {
+      "goal": "University funding",
+      "target_date": "2028-01-01",
+      "target_amount_gbp": 80000,
+      "status": "Planned"
+    },
+    {
+      "goal": "Australia family trip",
+      "target_date": "2027-01-01",
+      "target_amount_gbp": 15000,
+      "status": "Planned"
+    }
+  ]
+}

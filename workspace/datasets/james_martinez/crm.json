@@ -1,0 +1,169 @@
+{
+    "client_id": "C0XX",
+    "household": {
+        "primary_client": {
+            "first_name": "James",
+            "last_name": "Martinez",
+            "date_of_birth": "1982-10-03",
+            "age": 42,
+            "ni_number": "EF234567E",
+            "occupation": "Software Engineering Manager",
+            "employer": "TechFlow Solutions Ltd",
+            "annual_income_gbp": 107000,
+            "income_breakdown": {
+                "salary": 95000,
+                "bonus_average": 8000,
+                "share_options_average": 4000
+            },
+            "contact": {
+                "email": "james.martinez@techflow.com",
+                "mobile": "07845 123987"
+            }
+        },
+        "partner": {
+            "first_name": "Rebecca",
+            "last_name": "Martinez",
+            "date_of_birth": "1984-02-15",
+            "age": 40,
+            "ni_number": "GH567890F",
+            "occupation": "Consultant Radiologist",
+            "employer": "Royal Surrey NHS Foundation Trust",
+            "working_pattern": "4 days per week",
+            "annual_income_gbp": 104000,
+            "income_breakdown": {
+                "nhs_salary": 98000,
+                "private_work": 6000
+            },
+            "contact": {
+                "email": "rebecca.martinez@nhs.net",
+                "mobile": "07723 456123"
+            }
+        },
+        "children": [
+            {
+                "name": "Isabella Martinez",
+                "date_of_birth": "2015-05-22"
+            },
+            {
+                "name": "Lucas Martinez",
+                "date_of_birth": "2017-11-11"
+            },
+            {
+                "name": "Sofia Martinez",
+                "date_of_birth": "2020-03-08"
+            }
+        ],
+        "address": {
+            "line_1": "12 Oakwood Drive",
+            "town": "Godalming",
+            "county": "Surrey",
+            "postcode": "GU7 2BB",
+            "country": "UK"
+        }
+    },
+    "compliance": {
+        "last_review_date": "2024-09-08",
+        "next_review_date": "2025-09-01",
+        "risk_profile": "Balanced / Growth",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "main_residence": {
+                "value_gbp": 625000,
+                "purchase_year": 2017,
+                "purchase_price_gbp": 485000,
+                "mortgage": {
+                    "balance_gbp": 368000,
+                    "monthly_payment_gbp": 2250
+                }
+            }
+        },
+        "investments": {
+            "isas": {
+                "james": 28450,
+                "rebecca": 31280
+            },
+            "cash_savings": {
+                "value_gbp": 12600,
+                "emergency_fund_target_gbp": 30000
+            },
+            "premium_bonds": {
+                "value_gbp": 10000
+            },
+            "junior_isas": {
+                "total_value_gbp": 15900
+            },
+            "share_options_vested": {
+                "value_gbp": 18000
+            }
+        },
+        "pensions": {
+            "james": {
+                "current_sipp": 142600,
+                "previous_pensions": [
+                    34800,
+                    18200
+                ]
+            },
+            "rebecca": {
+                "nhs_defined_benefit_estimated_value": 195200,
+                "old_sipp": 23400
+            }
+        },
+        "assets": {
+            "vehicle": {
+                "value_gbp": 14500
+            }
+        }
+    },
+    "net_worth_gbp": 642730,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Capacity",
+            "description": "Three young children and competing financial priorities create execution risk"
+        },
+        {
+            "person": "Rebecca Martinez",
+            "type": "Lifestyle",
+            "description": "Future reduction in working days will impact NHS pension accrual"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Build emergency fund",
+            "target_date": "2025-06-01",
+            "target_amount_gbp": 30000,
+            "status": "In Progress"
+        },
+        {
+            "goal": "Retire",
+            "target_date": "2042-01-01",
+            "target_amount_gbp": 60000,
+            "status": "Under Modelling"
+        },
+        {
+            "goal": "House extension",
+            "target_date": "2027-01-01",
+            "target_amount_gbp": 80000,
+            "status": "Aspirational"
+        },
+        {
+            "goal": "Electric vehicle purchase",
+            "target_date": "2027-01-01",
+            "target_amount_gbp": 45000,
+            "status": "Planned"
+        }
+    ],
+    "planning_notes": {
+        "monthly_surplus_gbp": 2209,
+        "nursery_fees_ending_date": "2024-09-01",
+        "recommended_priority_order": [
+            "Emergency fund",
+            "Pension optimisation",
+            "University funding",
+            "Property extension"
+        ]
+    }
+}

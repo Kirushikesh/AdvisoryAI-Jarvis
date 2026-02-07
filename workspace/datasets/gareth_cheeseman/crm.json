@@ -1,0 +1,137 @@
+{
+    "client_id": "C007",
+    "household": {
+        "primary_client": {
+            "first_name": "Gareth",
+            "last_name": "Cheeseman",
+            "date_of_birth": "1979-07-19",
+            "age": 46,
+            "ni_number": "HN123456B",
+            "marital_status": "Divorced",
+            "occupation": "Construction Project Manager",
+            "employer": "BuildRight Ltd",
+            "annual_income_gbp": 86000,
+            "income_breakdown": {
+                "salary": 78000,
+                "bonus": 8000
+            },
+            "contact": {
+                "email": "gareth.cheeseman@constructionpm.com",
+                "mobile": "07723 891234"
+            }
+        },
+        "address": {
+            "line_1": "Apartment 5B, Riverside Development",
+            "town": "Weybridge",
+            "postcode": "KT13 8PL",
+            "country": "UK"
+        },
+        "children": [
+            {
+                "name": "Jack Cheeseman",
+                "date_of_birth": "2012-03-12",
+                "custody": "50/50",
+                "notes": "Ongoing private therapy"
+            },
+            {
+                "name": "Lily Cheeseman",
+                "date_of_birth": "2014-09-08",
+                "custody": "50/50"
+            }
+        ],
+        "relationships": {
+            "ex_spouse": "Claire Cheeseman",
+            "current_partner": {
+                "name": "Sarah",
+                "relationship_length_months": 12,
+                "status": "Dating"
+            }
+        }
+    },
+    "compliance": {
+        "last_review_date": "2026-01-18",
+        "next_review_date": "2027-02-20",
+        "risk_profile": "Balanced",
+        "service_status": "Active"
+    },
+    "financials": {
+        "property": {
+            "current_status": "Renting",
+            "rent_gbp_per_month": 1850
+        },
+        "investments": {
+            "isas": {
+                "value_gbp": 38000
+            },
+            "savings": {
+                "value_gbp": 45000,
+                "emergency_fund_gbp": 25000
+            }
+        },
+        "pensions": {
+            "current_employer": {
+                "provider": "BuildRight",
+                "value_gbp": 125000
+            },
+            "previous_employer": {
+                "provider": "Balfour Beatty",
+                "value_gbp": 55000,
+                "status": "Unconsolidated"
+            }
+        },
+        "assets": {
+            "vehicle": {
+                "model": "Audi Q5 (2020)",
+                "value_gbp": 22000,
+                "owned_outright": true
+            }
+        },
+        "liabilities": {
+            "child_maintenance_gbp_per_month": 1200
+        }
+    },
+    "net_worth_gbp": 285000,
+    "vulnerabilities": [
+        {
+            "person": "Household",
+            "type": "Family",
+            "description": "Shared custody with ongoing emotional support needs for eldest child"
+        },
+        {
+            "person": "Gareth Cheeseman",
+            "type": "Protection",
+            "description": "No income protection during peak financial responsibility years"
+        },
+        {
+            "person": "Household",
+            "type": "Legal",
+            "description": "Invalid will post-divorce leaving estate to ex-spouse"
+        }
+    ],
+    "goals": [
+        {
+            "goal": "Purchase property",
+            "target_date": "2026-07-01",
+            "target_amount_gbp": 400000,
+            "status": "On Track"
+        },
+        {
+            "goal": "Retire",
+            "target_date": "2039-01-01",
+            "target_amount_gbp": 45000,
+            "status": "At Risk"
+        },
+        {
+            "goal": "University funding",
+            "target_date": "2030-01-01",
+            "target_amount_gbp": 60000,
+            "status": "Planned"
+        }
+    ],
+    "planning_notes": {
+        "monthly_house_savings_gbp": 800,
+        "deposit_target_gbp": 40000,
+        "will_update_priority": "Urgent",
+        "income_protection_revisit_after": "House purchase"
+    }
+}

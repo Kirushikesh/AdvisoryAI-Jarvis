@@ -1,0 +1,154 @@
+{
+  "client_id": "C013",
+  "household": {
+    "primary_client": {
+      "first_name": "Alan",
+      "last_name": "Partridge",
+      "date_of_birth": "1965-11-15",
+      "age": 60,
+      "ni_number": "AB123456C",
+      "occupation": "Regional Radio Presenter",
+      "employer": "Mid Morning Matters",
+      "annual_income_gbp": 68000,
+      "contact": {
+        "mobile": "07891 234567",
+        "email": "alan.partridge@norfolkradio.co.uk"
+      }
+    },
+    "partner": {
+      "first_name": "Lynne",
+      "last_name": "Partridge",
+      "date_of_birth": "1967-03-22",
+      "age": 58,
+      "ni_number": "CD654321D",
+      "occupation": "Dental Receptionist",
+      "employment_status": "Part-time",
+      "annual_income_gbp": 24000,
+      "contact": {
+        "mobile": "07734 345678"
+      }
+    },
+    "address": {
+      "line_1": "Manor Lodge",
+      "line_2": "Norwich Road",
+      "town": "Cromer",
+      "postcode": "NR27 9HB",
+      "country": "UK"
+    },
+    "dependants": []
+  },
+  "advisor": {
+    "full_name": "Abimanyu Chamika",
+    "preferred_names": [
+      "Abimanyu",
+      "Abi",
+      "Mr Chamika"
+    ]
+  },
+  "compliance": {
+    "last_review_date": "2026-01-22",
+    "next_review_date": "2027-02-28",
+    "risk_profile": "Balanced",
+    "service_status": "Active"
+  },
+  "financials": {
+    "property": {
+      "main_residence": {
+        "value_gbp": 485000,
+        "purchase_year": 2002,
+        "purchase_price_gbp": 168000,
+        "mortgage_balance_gbp": 0
+      }
+    },
+    "investments": {
+      "isas": {
+        "alan": {
+          "provider": "Transact",
+          "value_gbp": 145000
+        },
+        "lynne": {
+          "provider": "Transact",
+          "value_gbp": 78000
+        }
+      },
+      "joint_savings": {
+        "value_gbp": 125000,
+        "notes": "Multiple savings accounts yielding approximately 4–5%"
+      },
+      "premium_bonds": {
+        "value_gbp": 35000
+      },
+      "other_assets": {
+        "classic_car_fund": 80000,
+        "collectibles_memorabilia": 15000
+      }
+    },
+    "pensions": {
+      "alan": [
+        {
+          "type": "Defined Benefit",
+          "provider": "BBC Pension Scheme",
+          "value_gbp": 285000
+        },
+        {
+          "type": "Personal Pension",
+          "provider": "Aviva",
+          "value_gbp": 65000
+        }
+      ],
+      "lynne": [
+        {
+          "type": "Workplace Pension",
+          "provider": "NEST",
+          "value_gbp": 42000
+        }
+      ]
+    },
+    "liabilities": {}
+  },
+  "net_worth_gbp": 895000,
+  "vulnerabilities": [
+    {
+      "person": "Lynne Partridge",
+      "type": "Health",
+      "description": "Chronic back pain affecting ability to work full-time"
+    },
+    {
+      "person": "Household",
+      "type": "Situational",
+      "description": "Emotional sensitivity around childlessness; topic actively avoided"
+    }
+  ],
+  "goals": [
+    {
+      "goal": "Alan retirement",
+      "target_date": "2030-01-01",
+      "target_amount_gbp": 55000,
+      "status": "At Risk"
+    },
+    {
+      "goal": "Lexus vehicle upgrade",
+      "target_date": "2026-09-01",
+      "target_amount_gbp": 45000,
+      "status": "Planned"
+    },
+    {
+      "goal": "Mediterranean villa purchase",
+      "target_date": "2028-01-01",
+      "target_amount_gbp": 180000,
+      "status": "Deferred"
+    },
+    {
+      "goal": "Lynne early retirement or reduced hours",
+      "target_date": "2027-03-01",
+      "target_amount_gbp": null,
+      "status": "Under Review"
+    }
+  ],
+  "planning_notes": {
+    "projected_retirement_income_gbp": 43000,
+    "annual_shortfall_gbp": 12000,
+    "recommended_salary_sacrifice_gbp": 8000,
+    "advisor_observations": "Alan presents confidence and resistance to advice when identity and status are challenged; Lynne is pragmatic and influential."
+  }
+}

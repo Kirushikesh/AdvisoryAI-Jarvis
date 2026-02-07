@@ -1,0 +1,181 @@
+{
+  "client_id": "C005",
+  "household": {
+    "primary_client": {
+      "first_name": "Priya",
+      "last_name": "Patel",
+      "date_of_birth": "1985-09-15",
+      "age": 40,
+      "ni_number": "PQ123456A",
+      "occupation": "NHS GP Partner",
+      "employment_fraction": "6/10",
+      "annual_income_gbp": 95000,
+      "employer": "Elmbridge Medical Centre",
+      "contact": {
+        "mobile": "07834 567890",
+        "email": "priya.patel@nhs.net"
+      }
+    },
+    "partner": {
+      "first_name": "Anil",
+      "last_name": "Patel",
+      "date_of_birth": "1983-11-22",
+      "age": 42,
+      "ni_number": "RS654321B",
+      "occupation": "Data Analytics Consultant",
+      "employment_status": "Self-employed (Ltd Company)",
+      "annual_income_gbp": 93000,
+      "income_breakdown": {
+        "salary": 68000,
+        "dividends": 25000
+      },
+      "contact": {
+        "mobile": "07756 123456",
+        "email": "anil.patel@datainsights.com"
+      }
+    },
+    "children": [
+      {
+        "name": "Ravi Patel",
+        "date_of_birth": "2015-04-10"
+      },
+      {
+        "name": "Maya Patel",
+        "date_of_birth": "2017-12-18"
+      },
+      {
+        "name": "Zara Patel",
+        "date_of_birth": "2021-06-05"
+      }
+    ],
+    "address": {
+      "line_1": "45 Laurel Avenue",
+      "town": "Surbiton",
+      "postcode": "KT6 4DP",
+      "country": "UK"
+    }
+  },
+  "compliance": {
+    "last_review_date": "2026-01-10",
+    "next_review_date": "2027-01-28",
+    "risk_profile": "Balanced",
+    "service_status": "Active"
+  },
+  "financials": {
+    "property": {
+      "main_residence": {
+        "value_gbp": 625000,
+        "purchase_year": 2014,
+        "purchase_price_gbp": 445000,
+        "mortgage": {
+          "balance_gbp": 245000,
+          "interest_rate_percent": 3.45,
+          "fixed_until": "2026-10-01",
+          "term_remaining_years": 16,
+          "monthly_payment_gbp": 1680
+        }
+      }
+    },
+    "investments": {
+      "isas": {
+        "priya": {
+          "value_gbp": 48200,
+          "status": "Not optimised"
+        },
+        "anil": {
+          "provider": "Vanguard",
+          "strategy": "60/40",
+          "value_gbp": 35800
+        }
+      },
+      "savings": {
+        "joint": 32000,
+        "emergency_fund": 18000,
+        "emergency_fund_target": 30000
+      },
+      "junior_isas": {
+        "ravi": 12400,
+        "maya": 9200,
+        "zara": 3800
+      },
+      "premium_bonds": {
+        "holder": "Priya Patel",
+        "value_gbp": 15000
+      }
+    },
+    "pensions": {
+      "priya": [
+        {
+          "type": "Defined Benefit",
+          "provider": "NHS Pension Scheme",
+          "accrued_income_gbp_per_year": 18500
+        }
+      ],
+      "anil": [
+        {
+          "type": "SIPP",
+          "providers": [
+            "Current SIPP",
+            "Accenture",
+            "Deloitte"
+          ],
+          "total_value_gbp": 172000
+        }
+      ]
+    },
+    "business_assets": {
+      "anil_company_cash_gbp": 45000,
+      "directors_loan_balance_gbp": -12000
+    },
+    "liabilities": {}
+  },
+  "net_worth_gbp": 975000,
+  "vulnerabilities": [
+    {
+      "person": "Household",
+      "type": "Time",
+      "description": "Both clients extremely time-poor leading to admin avoidance"
+    },
+    {
+      "person": "Anil Patel",
+      "type": "Financial",
+      "description": "Self-employed with income concentration and no income protection"
+    },
+    {
+      "person": "Household",
+      "type": "Family",
+      "description": "Future financial support likely for ageing parents"
+    }
+  ],
+  "goals": [
+    {
+      "goal": "Retire",
+      "target_date": "2045-01-01",
+      "target_amount_gbp": 70000,
+      "status": "On Track"
+    },
+    {
+      "goal": "Build emergency fund",
+      "target_date": "2026-12-31",
+      "target_amount_gbp": 30000,
+      "status": "In Progress"
+    },
+    {
+      "goal": "University funding",
+      "target_date": "2033-01-01",
+      "target_amount_gbp": 105000,
+      "status": "In Progress"
+    },
+    {
+      "goal": "Loft conversion",
+      "target_date": "2026-10-01",
+      "target_amount_gbp": 55000,
+      "status": "Planned"
+    }
+  ],
+  "planning_notes": {
+    "recommended_loft_funding_option": "Use £45k company reserves + £10k savings",
+    "recommended_anil_employer_pension_gbp": 15000,
+    "recommended_priya_isa_strategy": "Vanguard LifeStrategy 80"
+  }
+}
