@@ -11,6 +11,9 @@
 
 .dashboard-main {
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
 }
 
 .dashboard-sidebar {

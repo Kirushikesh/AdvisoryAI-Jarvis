@@ -43,9 +43,9 @@ const ClientsPage = () => {
         const file = files[0];
         if (!file) return;
 
-        // Validate .md extension
-        if (!file.name.endsWith('.md')) {
-            setUploadStatus({ type: 'error', message: 'Only .md files are allowed' });
+        // Validate .txt extension
+        if (!file.name.endsWith('.txt')) {
+            setUploadStatus({ type: 'error', message: 'Only .txt files are allowed' });
             setTimeout(() => setUploadStatus(null), 3000);
             return;
         }
@@ -143,7 +143,7 @@ const ClientsPage = () => {
                                 <option value="">Choose a client...</option>
                                 {clients.map(client => (
                                     <option key={client.folder} value={client.name}>
-                                        {client.name} ({client.file_count} files)
+                                        {client.name}
                                     </option>
                                 ))}
                             </select>
