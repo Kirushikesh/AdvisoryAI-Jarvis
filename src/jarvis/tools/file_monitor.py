@@ -2,12 +2,13 @@ from langchain_core.tools import tool
 from pathlib import Path
 from datetime import datetime
 from typing import Union
-from jarvis.config import CLIENT_DATA_PATH
+from jarvis.config import CLIENT_DATA_PATH, WORKSPACE_DIR
 
 @tool
 def find_files_updated_after(timestamp: str) -> Union[str, list]:
     """
     Find all files in the client data folder that were modified after a given timestamp.
+    Paths are returned relative to the workspace directory.
     Useful during heartbeat checks to detect changes in client documents, emails, or transcripts.
     
     Args:
@@ -16,7 +17,7 @@ def find_files_updated_after(timestamp: str) -> Union[str, list]:
                         Or just date: "2024-01-15" (assumes 00:00:00)
     
     Returns:
-        list: List of file paths that were modified after the timestamp
+        list: List of dictionaries containing relative file paths and modification times
     
     Example:
         find_files_updated_after("2024-01-15 14:30:00")
@@ -46,9 +47,16 @@ def find_files_updated_after(timestamp: str) -> Union[str, list]:
             
             # Check if file was modified after the given timestamp
             if mod_time > check_time:
+                # Calculate relative path to workspace
+                try:
+                    rel_path = file_path.relative_to(WORKSPACE_DIR)
+                except ValueError:
+                    # Fallback to absolute string if not under WORKSPACE_DIR
+                    rel_path = file_path
+                
                 # Include file path and modification time for better context
                 updated_files.append({
-                    "path": str(file_path),
+                    "path": str(rel_path),
                     "modified": mod_time.strftime("%Y-%m-%d %H:%M:%S")
                 })
     

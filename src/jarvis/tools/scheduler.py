@@ -4,10 +4,131 @@ from datetime import datetime
 from langchain_core.tools import tool
 from typing import Dict
 import time
+import requests
 
 # Global scheduler instance
 scheduler = BackgroundScheduler()
 scheduler.start()
+
+# Store task descriptions for display
+task_descriptions: Dict[str, dict] = {}
+
+
+def seed_demo_jobs():
+    """Seed demo cron jobs for dashboard display."""
+    # Clear existing demo jobs first to prevent conflicts
+    demo_job_names = [
+        "birthday_alan_partridge",
+        "birthday_antony_makepeace", 
+        "tax_reminder_alan",
+        "tax_reminder_antony",
+        "tax_reminder_basil"
+    ]
+    
+    for job_name in demo_job_names:
+        if scheduler.get_job(job_name):
+            scheduler.remove_job(job_name)
+        if job_name in task_descriptions:
+            del task_descriptions[job_name]
+    
+    demo_jobs = [
+        # Birthday reminders
+        {
+            "name": "birthday_alan_partridge",
+            "cron": "0 9 15 4 *",  # April 15th at 9 AM
+            "description": "🎂 Send birthday wishes to Alan Partridge. Draft a warm, personalized message acknowledging his special day."
+        },
+        {
+            "name": "birthday_antony_makepeace",
+            "cron": "0 9 22 7 *",  # July 22nd at 9 AM  
+            "description": "🎂 Send birthday wishes to Antony Makepeace. Draft a warm, personalized message acknowledging his special day."
+        },
+        # Tax filing reminders (UK deadline is Jan 31, so remind Dec 31)
+        {
+            "name": "tax_reminder_alan",
+            "cron": "0 9 31 12 *",  # December 31st at 9 AM
+            "description": "📋 Tax filing reminder for Alan Partridge. UK Self Assessment deadline is January 31st - remind client to file their tax return."
+        },
+        {
+            "name": "tax_reminder_antony",
+            "cron": "0 9 31 12 *",  # December 31st at 9 AM
+            "description": "📋 Tax filing reminder for Antony Makepeace. UK Self Assessment deadline is January 31st - remind client to file their tax return."
+        },
+        {
+            "name": "tax_reminder_basil",
+            "cron": "0 9 31 12 *",  # December 31st at 9 AM
+            "description": "📋 Tax filing reminder for Basil Fawlty. UK Self Assessment deadline is January 31st - remind client to file their tax return."
+        },
+    ]
+    
+    for job in demo_jobs:
+        # Only add to task_descriptions for display, skip actual scheduler
+        # (to avoid circular import issues at module load time)
+        task_descriptions[job["name"]] = {
+            "cron": job["cron"],
+            "description": job["description"],
+            "created_at": datetime.now().isoformat()
+        }
+        
+        # Parse cron for scheduler
+        cron_parts = job["cron"].split()
+        minute, hour, day, month, day_of_week = cron_parts
+        
+        # Create a simple task function (actual Jarvis invocation happens in add_cron_job)
+        def create_task(job_name, job_desc):
+            def task():
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print(f"\n[{timestamp}] [Cron: {job_name}] Triggering scheduled task...")
+                try:
+                    from jarvis.deepagent import create_jarvis_agent
+                    from jarvis.config import NO_REPLY_TOKEN
+                    agent = create_jarvis_agent()
+                    result = agent.invoke({"messages": [{"role": "user", "content": job_desc}]})
+                    response = result["messages"][-1].content
+                    if NO_REPLY_TOKEN not in response:
+                        send_notification(f"📅 {job_name}", response, "action")
+                except Exception as e:
+                    print(f"[Cron: {job_name}] Error: {e}")
+            return task
+        
+        scheduler.add_job(
+            func=create_task(job["name"], job["description"]),
+            trigger=CronTrigger(
+                minute=minute,
+                hour=hour,
+                day=day,
+                month=month,
+                day_of_week=day_of_week
+            ),
+            id=job["name"],
+            name=job["name"]
+        )
+    
+    print(f"[Scheduler] Seeded {len(demo_jobs)} demo cron jobs")
+
+
+# API endpoint for notifications
+API_BASE_URL = "http://localhost:8000"
+
+
+def send_notification(title: str, message: str, notification_type: str = "action"):
+    """Send a notification to the API for the frontend dashboard."""
+    try:
+        response = requests.post(
+            f"{API_BASE_URL}/api/notifications",
+            json={
+                "type": notification_type,
+                "title": title,
+                "message": message
+            },
+            timeout=5
+        )
+        if response.ok:
+            print(f"[Scheduler]: Notification sent to dashboard")
+        else:
+            print(f"[Scheduler]: Failed to send notification: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"[Scheduler]: Could not reach API: {e}")
 
 
 @tool
@@ -43,10 +164,34 @@ def add_cron_job(name: str, cron: str, task_description: str) -> str:
         
         minute, hour, day, month, day_of_week = cron_parts
         
-        # Create the task function
+        # Create the task function that invokes Jarvis
         def task():
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"[{timestamp}] [{name}] {message}")
+            print(f"\n[{timestamp}] [Cron: {name}] Triggering scheduled task...")
+            
+            try:
+                # Import here to avoid circular imports
+                from jarvis.deepagent import create_jarvis_agent
+                from jarvis.config import NO_REPLY_TOKEN
+                
+                # Create agent and invoke with the task description
+                agent = create_jarvis_agent()
+                result = agent.invoke({"messages": [{"role": "user", "content": task_description}]})
+                response = result["messages"][-1].content
+                
+                # Handle response - if not NO_REPLY, send notification
+                if NO_REPLY_TOKEN not in response:
+                    print(f"[Cron: {name}]: {response}")
+                    send_notification(
+                        title=f"📅 Scheduled Task: {name}",
+                        message=response,
+                        notification_type="action"
+                    )
+                else:
+                    print(f"[Cron: {name}]: Task completed - no notification needed")
+                    
+            except Exception as e:
+                print(f"[Cron: {name}] Error executing task: {e}")
         
         # Add job to scheduler
         scheduler.add_job(
@@ -62,7 +207,14 @@ def add_cron_job(name: str, cron: str, task_description: str) -> str:
             name=name
         )
         
-        return f"Success: Job '{name}' added with schedule '{cron}'. Message: '{message}'"
+        # Store task description for API retrieval
+        task_descriptions[name] = {
+            "cron": cron,
+            "description": task_description,
+            "created_at": datetime.now().isoformat()
+        }
+        
+        return f"Success: Job '{name}' added with schedule '{cron}'. Description: '{task_description}'"
         
     except Exception as e:
         return f"Error adding job: {str(e)}"
@@ -88,6 +240,9 @@ def remove_cron_job(name: str) -> str:
             return f"Error: Job '{name}' not found. Use list_cron_jobs to see available jobs."
         
         scheduler.remove_job(name)
+        # Clean up stored description
+        if name in task_descriptions:
+            del task_descriptions[name]
         return f"Success: Job '{name}' has been removed."
         
     except Exception as e:
@@ -162,9 +317,31 @@ def get_cron_job_info(name: str) -> str:
         return f"Error getting job info: {str(e)}"
 
 
+def get_all_scheduled_jobs() -> list:
+    """
+    Get all scheduled jobs with their details for API consumption.
+    Returns a list of dictionaries with job info.
+    """
+    jobs = scheduler.get_jobs()
+    result = []
+    
+    for job in jobs:
+        job_info = {
+            "id": job.id,
+            "name": job.name,
+            "next_run": job.next_run_time.isoformat() if job.next_run_time else None,
+            "trigger": str(job.trigger),
+            "description": task_descriptions.get(job.id, {}).get("description", ""),
+            "cron": task_descriptions.get(job.id, {}).get("cron", ""),
+        }
+        result.append(job_info)
+    
+    return result
+
+
 # Example usage with LangChain agent
 if __name__ == "__main__":
-    pass
+    seed_demo_jobs()
     # from langchain_anthropic import ChatAnthropic
     # from langgraph.prebuilt import create_react_agent
     
