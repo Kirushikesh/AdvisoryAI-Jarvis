@@ -128,6 +128,7 @@ Jarvis has access to both default and custom tools:
    > *"Show me anything in the last 10 days that looks urgent across my book (emails and meeting notes)?"*
 4. **Behind the Scenes**: Jarvis will scan `datasets/**` for files modified between Jan 28 and Feb 08, 2026, and use **Atlas** to identify risks.
 
+The sample langsmith trajectory: [here](https://smith.langchain.com/public/d7b24352-13ce-454a-bfac-d509996f2a4d/r)
 ### Demo 2: The Proactive Heartbeat (Gareth Cheeseman)
 *Test how Jarvis identifies new incoming data and alerts you autonomously.*
 
@@ -138,6 +139,8 @@ Jarvis has access to both default and custom tools:
    - Upload the sample file as an "Email Archive" document.
 3. **The Result**: Within 30 minutes (or on the next heartbeat), a notification will appear in the Dashboard: 
    > *"🚨 Jarvis Alert: Gareth Cheeseman has emailed regarding income protection policies due to illness..."*
+
+The sample langsmith trajectory: [here](https://smith.langchain.com/public/2cd268e8-bdf6-4ab5-875a-eb580628ca99/r)
 
 ---
 
