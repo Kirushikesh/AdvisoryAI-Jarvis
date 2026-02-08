@@ -50,7 +50,7 @@ const FileUpload = ({ onFileSelect, disabled }) => {
                 ref={fileInputRef}
                 type="file"
                 multiple
-                accept=".md"
+                accept=".txt"
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
             />
@@ -68,7 +68,7 @@ const FileUpload = ({ onFileSelect, disabled }) => {
                     {disabled ? 'Select a client first' : 'Drop files here or click to upload'}
                 </p>
                 <p className="upload-hint">
-                    Only Markdown (.md) files are supported
+                    Only Text (.txt) files are supported
                 </p>
             </div>
         </div>
