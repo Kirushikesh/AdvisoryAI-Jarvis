@@ -9,7 +9,7 @@ const agents = [
     { id: 'colin', name: 'Colin', role: 'Compliance', color: '#f59e0b' }
 ];
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const ChatPage = () => {
     const [selectedAgent, setSelectedAgent] = useState(agents[0]);
