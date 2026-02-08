@@ -11,20 +11,17 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy only requirements to cache them in docker layer
-COPY requirements.txt .
-
-# Install dependencies using pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code
+# Copy the entire project (needed for local package install)
 COPY . .
+
+# Install the package and its dependencies
+RUN pip install --no-cache-dir .
 
 # Expose the port the app runs on
 EXPOSE 8000
 
 # Run the application
-# CMD is strictly not needed if Procfile is present, but good for local docker run
 CMD ["uvicorn", "src.jarvis.api:app", "--host", "0.0.0.0", "--port", "8000"]
