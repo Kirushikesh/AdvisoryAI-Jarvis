@@ -50,18 +50,27 @@ The system is built as a **Deep Agent** using the `deepagents` framework, which 
 
 ## 🤖 Sub-Agent Registry
 
-| Agent | Module | Role | Description |
-| :--- | :--- | :--- | :--- |
-| **Atlas** | `atlas.py` | RAG Specialist | Analyzes client docs, emails, and transcripts. Always ground insights in retrieved context. |
-| **Emma** | `emma.py` | Paraplanner | Converts raw data into client-facing docs (emails, reports) with traceable reasoning. |
-| **Colin** | `colin.py` | Compliance | Reviews outputs against UK FCA regulations. Returns binary Pass/Fail with reasoning. |
+| Agent | Role | Focus |
+| :--- | :--- | :--- |
+| **Atlas** | RAG Specialist | Analyzes client docs, emails, and transcripts. Grounded in ChromaDB and Workspace data. |
+| **Emma** | Paraplanner | Generates professional client documents with traceable reasoning. |
+| **Colin** | Compliance | Binary Pass/Fail reviews against UK FCA regulations using live web search. |
 
-## 🛠️ Tools Registry
+## 🛠️ Key Capabilities & Tools
 
-Agents have access to specialized tools in `src/jarvis/tools/`:
-- **Market News:** `get_market_news` retrieves real-time financial updates.
-- **Scheduler:** `add_cron_job`, `remove_cron_job`, etc., for periodic background work.
-- **Monitor:** `find_files_updated_after` for tracking workspace modifications.
+1. **Reactive Urgency Check (10-Day Sweep):** Jarvis can scan the last 10 days of emails and meeting notes across the entire client book.
+2. **Proactive Heartbeat:** A background pulse (`jarvis_heartbeat.py`) that monitors workspace changes and alerts the advisor via the dashboard.
+3. **Custom Tools:**
+    - `get_market_news`: Real-time UK financial updates.
+    - `find_files_updated_after`: Targeted detection of new workspace documents.
+    - `add_cron_job`: Dynamic scheduling for recurring advisory tasks.
+
+## 📂 Project Navigation
+
+- `src/jarvis/`: Core logic and agent definitions.
+- `workspace/`: Jarvis's operational brain and client datasets.
+- `frontend/`: React-based advisor dashboard.
+- `sample/`: Standardized data for testing and demonstrations.
 
 ## 📜 Agent Working Conventions
 
