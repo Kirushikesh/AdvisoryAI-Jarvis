@@ -14,7 +14,7 @@ from jarvis.tools.scheduler import (
 from jarvis.sub_agents.atlas import atlas_agent
 from jarvis.sub_agents.emma import emma_agent
 from jarvis.sub_agents.colin import colin_agent
-from jarvis.config import OPENAI_API_KEY
+from jarvis.config import OPENAI_API_KEY, WORKSPACE_DIR
 from dotenv import find_dotenv, load_dotenv
 from deepagents.backends import FilesystemBackend
 from langgraph.checkpoint.memory import MemorySaver
@@ -25,7 +25,7 @@ load_dotenv(find_dotenv(), override=True)
 checkpointer = MemorySaver()
 
 # Workspace paths
-WORKSPACE_DIR = Path("./")
+# WORKSPACE_DIR = Path("./")
 
 def build_system_prompt(mode: str = "chat") -> str:
     """
@@ -64,7 +64,7 @@ Keep narration brief and value-dense.
 - Comply with stop/pause requests immediately
 
 ## Workspace
-Your working directory is: {WORKSPACE_DIR}
+Your working directory is: ./
 Treat this directory as your single global workspace for file operations.
 
 ## Current Date & Time
@@ -104,19 +104,21 @@ HEARTBEAT_OK
 Jarvis treats a leading/trailing "HEARTBEAT_OK" as a heartbeat ack (and may discard it).  
 If something needs attention, do NOT include "HEARTBEAT_OK"; reply with the alert text instead.
 
-If the user asks to show anything in the last 10 days that looks urgent across my book(emails and meeting notes), FIRST read the contents of `SOUL.md`, `USER.md` and `MEMORY.md` files into your chat history. Then check the local workspace use the ls and glob to find all the datasets/**/email_archive/*.txt and datasets/**/meeting_transcripts/*.txt(just have * don't put any more) files inside datasets/ for email archive and meeting transcripts from the name you can find the one that happened in the last 10 days(if today is 2026-02-08, then from 2026-01-28 to 2026-02-08), once you found the files, read them, and ask the atlas for specific users(just mention the user names and ask for actions no need to call multiple times and no need to mention the exact file names) and get the further details and then reply to the user. The `find_files_updated_after` is not the right tool don't use it.
-If you wake up from a heartbeat, FIRST read the contents of `SOUL.md`, `USER.md`, `MEMORY.md` and `HEARTBEAT.md` files into your chat history, use the find_files_updated_after in last 30 minutes to find the files that were updated in last 30 minutes, if there is any mails read it and if its something important, read the CRM of the client and other last one or two email and previous transcripts to get the context and ask the atlas to get the recommended action and investigate whether there is any similar client advise abi has given and take that action response give it to the colin and finally back to the user.
+**If the user asks to show anything in the last 10 days that looks urgent across my book(emails and meeting notes), FIRST read the contents of `SOUL.md`, `USER.md` and `MEMORY.md` files into your chat history. Then check the local workspace use the ls and glob to find all the datasets/**/email_archive/*.txt and datasets/**/meeting_transcripts/*.txt(just have * don't put any more) files inside datasets/ for email archive and meeting transcripts from the name you can find the one that happened in the last 10 days(if today is 2026-02-08, then from 2026-01-28 to 2026-02-08), once you found the files, read them, and ask the atlas for specific users(just mention the user names and ask for actions no need to call multiple times and no need to mention the exact file names) and get the further details and then reply to the user. The `find_files_updated_after` is not the right tool don't use it.**
+
+**If you wake up from a heartbeat, FIRST read the contents of `SOUL.md`, `USER.md`, `MEMORY.md` and `HEARTBEAT.md` files into your chat history, use the find_files_updated_after in last 30 minutes to find the files that were updated in last 30 minutes, if there is any mails read it and if its something important, read the CRM of the client and other last one or two email and previous transcripts to get the context and ask the atlas to get the recommended action and investigate whether there is any similar client advise abi has given and take that action response give it to the colin and finally back to the user.**
 """
     
     return prompt
 
 
-def create_jarvis_agent(system_prompt: str = None):
+def create_jarvis_agent(system_prompt: str = None, model: str = "openai:gpt-4.1"):
     """
     Creates and returns the Jarvis Deep Agent with specialized subagents.
     
     Args:
         system_prompt: Optional custom system prompt. If None, builds from workspace files.
+        model: The model to use for the agent. Defaults to "openai:gpt-4.1".
     """
     if system_prompt is None:
         system_prompt = build_system_prompt()
@@ -169,13 +171,13 @@ def create_jarvis_agent(system_prompt: str = None):
     # Create the Deep Agent with subagents
     # This returns a compiled LangGraph that can be invoked
     agent = create_deep_agent(
-        model="openai:gpt-4.1", # 4.1
+        model=model,
         tools=tools,
         system_prompt=system_prompt,
         subagents=[atlas_subagent, emma_subagent, colin_subagent],
         backend=FilesystemBackend(root_dir=str(WORKSPACE_DIR), virtual_mode=True),
         checkpointer=checkpointer,
-        skills=[str(WORKSPACE_DIR / "skills")],
+        skills=["./skills"],
         middleware=[
             ModelRetryMiddleware(
                 max_retries=3,
