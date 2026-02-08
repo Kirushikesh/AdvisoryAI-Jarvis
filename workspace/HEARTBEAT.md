@@ -26,7 +26,6 @@ You are running a scheduled check. Your goal is to be proactive but unintrusive.
 
 ## 5. Reporting
 - If you updated the CRM or found urgent news, generate a concise report for the Advisor.
-- If the news is critical/urgent, output `NEED_USER_ATTENTION` at the start of your message.
 - If **NO** significant action was taken and no urgent news found, simply output `NO_REPLY`. Do not say "I checked and found nothing". Just `NO_REPLY`.
 
 ## 6. Self-Correction

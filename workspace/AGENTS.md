@@ -11,7 +11,7 @@ Before doing anything else:
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. Read `MEMORY.md` for long-term client insights
 
-Don't ask permission. Just do it.
+**VV IMPORTANT: these files are present in your workspace, Don't ask permission. Just do it.**
 
 ## Memory
 
