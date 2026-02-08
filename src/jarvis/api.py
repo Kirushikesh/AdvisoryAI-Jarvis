@@ -89,7 +89,6 @@ def seed_demo_data():
     """Seed demo notifications and scheduled tasks on API startup."""
     # Seed demo notifications
     demo_notifications = [
-        ("action", "🚨 Client Alert: Gareth Cheeseman", "New email received from Gareth asking about income protection if he became ill. This may require a review of his current protection policies."),
         ("warning", "📋 Compliance Review Required", "Emma has drafted a suitability letter for Sarah Thompson. Colin flagged it for review - missing risk warning disclosures. Please review before sending."),
         ("info", "📈 Market Update: UK Gilts", "Bank of England held interest rates at 4.5%. This may impact Brian Potter's fixed income allocation. Consider reviewing his portfolio."),
         ("success", "✅ Annual Review Complete", "Completed annual review for Emma Thompson. Updated risk profile and investment strategy documented. Next review scheduled for February 2027."),
@@ -144,8 +143,26 @@ def get_or_create_agent(agent_type: str, thread_id: str):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
+    import threading
+    from jarvis.jarvis_heartbeat import run_scheduler, heartbeat_job
+    from jarvis.config import HEARTBEAT_INTERVAL_MINUTES
+    
     print("🚀 Jarvis API starting...")
     print(f"📁 Workspace: {WORKSPACE_DIR}")
+    
+    # Start heartbeat scheduler in background thread
+    def start_heartbeat():
+        print(f"💓 Heartbeat scheduler started ({HEARTBEAT_INTERVAL_MINUTES} min interval)")
+        # Run initial heartbeat after a short delay
+        import time
+        time.sleep(5)  # Wait for API to be fully ready
+        heartbeat_job()
+        # Then run the scheduler loop
+        run_scheduler()
+    
+    heartbeat_thread = threading.Thread(target=start_heartbeat, daemon=True)
+    heartbeat_thread.start()
+    
     yield
     print("👋 Jarvis API shutting down...")
 
@@ -158,9 +175,19 @@ app = FastAPI(
 )
 
 # CORS for frontend
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+# Add frontend URL from environment variable if present
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

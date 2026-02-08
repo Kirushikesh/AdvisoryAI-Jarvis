@@ -10,31 +10,42 @@ from jarvis.config import (
     HEARTBEAT_OK_TOKEN,
     NO_REPLY_TOKEN
 )
+import os
 import uuid
 
-# API endpoint for notifications
-API_BASE_URL = "http://localhost:8000"
+# API endpoint for notifications (used for HTTP fallback only)
+API_BASE_URL = os.getenv("API_INTERNAL_URL", "http://localhost:8000")
 
 
 def send_notification(title: str, message: str, notification_type: str = "action"):
-    """Send a notification to the API for the frontend dashboard."""
+    """
+    Send a notification to the dashboard.
+    When running in-process with API, uses direct function call.
+    Falls back to HTTP request if direct import fails.
+    """
     try:
-        response = requests.post(
-            f"{API_BASE_URL}/api/notifications",
-            json={
-                "type": notification_type,
-                "title": title,
-                "message": message
-            },
-            timeout=5
-        )
-        if response.ok:
-            print(f"[Scheduler]: Notification sent to dashboard")
-        else:
-            print(f"[Scheduler]: Failed to send notification: {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        print(f"[Scheduler]: Could not reach API: {e}")
-
+        # Try direct function call first (when running in-process with API)
+        from jarvis.api import add_notification
+        add_notification(notification_type, title, message)
+        print(f"[Scheduler]: Notification added to dashboard")
+    except ImportError:
+        # Fall back to HTTP request (when running as separate process)
+        try:
+            response = requests.post(
+                f"{API_BASE_URL}/api/notifications",
+                json={
+                    "type": notification_type,
+                    "title": title,
+                    "message": message
+                },
+                timeout=5
+            )
+            if response.ok:
+                print(f"[Scheduler]: Notification sent to dashboard")
+            else:
+                print(f"[Scheduler]: Failed to send notification: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"[Scheduler]: Could not reach API: {e}")
 
 def heartbeat_job():
     """
