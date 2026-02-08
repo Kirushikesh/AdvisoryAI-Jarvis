@@ -9,6 +9,7 @@ from langchain.agents import create_agent
 from tavily import TavilyClient
 from jarvis.config import OPENAI_API_KEY
 from langchain.chat_models import init_chat_model
+from langchain.agents.middleware import ModelRetryMiddleware
 
 # Initialize LLM for Colin
 llm = init_chat_model("gpt-4.1")
@@ -74,7 +75,14 @@ colin_system_prompt = (
 colin_agent = create_agent(
     model=llm,
     tools=[search_uk_compliance],
-    system_prompt=colin_system_prompt
+    system_prompt=colin_system_prompt,
+    middleware=[
+        ModelRetryMiddleware(
+            max_retries=3,
+            backoff_factor=2.0,
+            initial_delay=1.0,
+        ),
+    ],
 )
 
 

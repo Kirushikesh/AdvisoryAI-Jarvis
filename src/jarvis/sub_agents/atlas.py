@@ -7,6 +7,7 @@ from jarvis.utils.vector_store import query_vector_store, ingest_documents
 from jarvis.config import OPENAI_API_KEY, LITELLM_API_KEY, LITELLM_URL
 from langchain.chat_models import init_chat_model
 from langchain.agents.middleware import TodoListMiddleware
+from langchain.agents.middleware import ModelRetryMiddleware
 
 # Initialize LLM for Atlas (consistent with simple_rag_agent.py)
 llm = init_chat_model("gpt-4.1")
@@ -43,8 +44,15 @@ atlas_agent = create_agent(
     model=llm, 
     tools=[retrieve_context], 
     system_prompt=atlas_system_prompt, 
-    middleware=[TodoListMiddleware()],
-)
+    middleware=[
+        TodoListMiddleware(),
+        ModelRetryMiddleware(
+                max_retries=3,
+                backoff_factor=2.0,
+                initial_delay=1.0,
+            ),
+        ],
+    )
 
 
 if __name__ == "__main__":

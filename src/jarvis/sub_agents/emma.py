@@ -6,6 +6,7 @@ from langchain.agents import create_agent
 from jarvis.config import OPENAI_API_KEY
 from langchain.chat_models import init_chat_model
 from langchain.agents.middleware import TodoListMiddleware
+from langchain.agents.middleware import ModelRetryMiddleware
 
 # Initialize LLM for Emma
 llm = init_chat_model("gpt-4.1")
@@ -49,7 +50,14 @@ emma_agent = create_agent(
     model=llm,
     tools=[],  # Tools removed - deep agent handles subagent communication
     system_prompt=emma_system_prompt,
-    middleware=[TodoListMiddleware()],
+    middleware=[
+        TodoListMiddleware(),
+        ModelRetryMiddleware(
+            max_retries=3,
+            backoff_factor=2.0,
+            initial_delay=1.0,
+        ),
+    ],
 )
 
 
