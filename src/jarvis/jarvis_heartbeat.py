@@ -55,8 +55,8 @@ def heartbeat_job():
     print("\n[Scheduler]: Triggering Heartbeat...")
     
     try:
-        # Create agent with auto-built system prompt
-        agent = create_jarvis_agent()
+        # Create agent with auto-built system prompt and oss model for heartbeat
+        agent = create_jarvis_agent(model="openai:gpt-oss-120b")
         
         # Send the heartbeat prompt
         result = agent.invoke(

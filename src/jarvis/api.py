@@ -155,7 +155,7 @@ async def lifespan(app: FastAPI):
         print(f"💓 Heartbeat scheduler started ({HEARTBEAT_INTERVAL_MINUTES} min interval)")
         # Run initial heartbeat after a short delay
         import time
-        time.sleep(5)  # Wait for API to be fully ready
+        time.sleep(300)  # Wait for API to be fully ready
         heartbeat_job()
         # Then run the scheduler loop
         run_scheduler()
