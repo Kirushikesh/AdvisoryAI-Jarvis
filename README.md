@@ -29,7 +29,7 @@ Jarvis is a sophisticated AI assistant designed specifically for Independent Fin
 | Context | Model |
 |---------|-------|
 | Direct Chat (Jarvis) | `openai:gpt-4.1` |
-| Heartbeat & Cron Jobs | `openai:gpt-oss-120b` |
+| Heartbeat & Cron Jobs | `openai:gpt-5-nano` |
 
 ---
 

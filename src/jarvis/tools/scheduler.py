@@ -82,7 +82,7 @@ def seed_demo_jobs():
                 try:
                     from jarvis.deepagent import create_jarvis_agent
                     from jarvis.config import NO_REPLY_TOKEN
-                    agent = create_jarvis_agent(model="openai:gpt-oss-120b")
+                    agent = create_jarvis_agent(model="openai:gpt-5-nano")
                     result = agent.invoke({"messages": [{"role": "user", "content": job_desc}]})
                     response = result["messages"][-1].content
                     if NO_REPLY_TOKEN not in response:
@@ -175,7 +175,7 @@ def add_cron_job(name: str, cron: str, task_description: str) -> str:
                 from jarvis.config import NO_REPLY_TOKEN
                 
                 # Create agent and invoke with the task description
-                agent = create_jarvis_agent(model="openai:gpt-oss-120b")
+                agent = create_jarvis_agent(model="openai:gpt-5-nano")
                 result = agent.invoke({"messages": [{"role": "user", "content": task_description}]})
                 response = result["messages"][-1].content
                 

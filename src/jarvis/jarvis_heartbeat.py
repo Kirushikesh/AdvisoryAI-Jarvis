@@ -56,7 +56,7 @@ def heartbeat_job():
     
     try:
         # Create agent with auto-built system prompt and oss model for heartbeat
-        agent = create_jarvis_agent(model="openai:gpt-oss-120b")
+        agent = create_jarvis_agent(model="openai:gpt-5-nano")
         
         # Send the heartbeat prompt
         result = agent.invoke(
