@@ -1,7 +1,6 @@
 import time
 import threading
 import schedule
-import requests
 
 from jarvis.deepagent import create_jarvis_agent, build_system_prompt
 from jarvis.config import (
@@ -10,42 +9,9 @@ from jarvis.config import (
     HEARTBEAT_OK_TOKEN,
     NO_REPLY_TOKEN
 )
-import os
+from jarvis.tools.heartbeat_tools import send_important_notification, send_draft_email
 import uuid
 
-# API endpoint for notifications (used for HTTP fallback only)
-API_BASE_URL = os.getenv("API_INTERNAL_URL", "http://localhost:8000")
-
-
-def send_notification(title: str, message: str, notification_type: str = "action"):
-    """
-    Send a notification to the dashboard.
-    When running in-process with API, uses direct function call.
-    Falls back to HTTP request if direct import fails.
-    """
-    try:
-        # Try direct function call first (when running in-process with API)
-        from jarvis.api import add_notification
-        add_notification(notification_type, title, message)
-        print(f"[Scheduler]: Notification added to dashboard")
-    except ImportError:
-        # Fall back to HTTP request (when running as separate process)
-        try:
-            response = requests.post(
-                f"{API_BASE_URL}/api/notifications",
-                json={
-                    "type": notification_type,
-                    "title": title,
-                    "message": message
-                },
-                timeout=5
-            )
-            if response.ok:
-                print(f"[Scheduler]: Notification sent to dashboard")
-            else:
-                print(f"[Scheduler]: Failed to send notification: {response.status_code}")
-        except requests.exceptions.RequestException as e:
-            print(f"[Scheduler]: Could not reach API: {e}")
 
 def heartbeat_job():
     """
@@ -56,7 +22,12 @@ def heartbeat_job():
     
     try:
         # Create agent with auto-built system prompt and oss model for heartbeat
-        agent = create_jarvis_agent(model="openai:gpt-5-nano")
+        # Provide heartbeat-specific tools so the LLM can push notifications
+        # and draft emails on its own.
+        agent = create_jarvis_agent(
+            model="openai:gpt-5-nano",
+            extra_tools=[send_important_notification, send_draft_email],
+        )
         
         # Send the heartbeat prompt
         result = agent.invoke(
@@ -71,13 +42,9 @@ def heartbeat_job():
         elif NO_REPLY_TOKEN in response:
             print("[Scheduler]: No reply - Nothing to report")
         else:
-            # Jarvis has something important to report - send to dashboard
-            print(f"\n[Jarvis (Heartbeat)]: {response}")
-            send_notification(
-                title="🚨 Jarvis Alert",
-                message=response,
-                notification_type="action"
-            )
+            # Agent handles actions via tools (notification / draft email)
+            print(f"[Scheduler]: Heartbeat completed with tool actions")
+            pass
             
     except Exception as e:
         print(f"\n[Scheduler]: Error in heartbeat: {e}")

@@ -8,8 +8,44 @@ interpret.
 """
 
 import uuid
+import os
+import requests
 from datetime import datetime
 from langchain_core.tools import tool
+
+# API endpoint for notifications (used for HTTP fallback only)
+API_BASE_URL = os.getenv("API_INTERNAL_URL", "http://localhost:8000")
+
+
+def send_notification(title: str, message: str, notification_type: str = "action"):
+    """
+    Send a notification to the dashboard.
+    When running in-process with API, uses direct function call.
+    Falls back to HTTP request if direct import fails.
+    """
+    try:
+        # Try direct function call first (when running in-process with API)
+        from jarvis.api import add_notification
+        add_notification(notification_type, title, message)
+        print(f"[Scheduler]: Notification added to dashboard")
+    except ImportError:
+        # Fall back to HTTP request (when running as separate process)
+        try:
+            response = requests.post(
+                f"{API_BASE_URL}/api/notifications",
+                json={
+                    "type": notification_type,
+                    "title": title,
+                    "message": message
+                },
+                timeout=5
+            )
+            if response.ok:
+                print(f"[Scheduler]: Notification sent to dashboard")
+            else:
+                print(f"[Scheduler]: Failed to send notification: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"[Scheduler]: Could not reach API: {e}")
 
 
 @tool
@@ -25,7 +61,6 @@ def send_important_notification(title: str, message: str, notification_type: str
         message: Detailed body text explaining what was found.
         notification_type: One of 'info', 'warning', 'action', 'success'. Defaults to 'action'.
     """
-    from jarvis.jarvis_heartbeat import send_notification
     send_notification(title=title, message=message, notification_type=notification_type)
     return f"Notification sent to dashboard: {title}"
 

@@ -15,13 +15,14 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(), override=True)
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+import asyncio
 
 # Import Jarvis modules AFTER loading .env
-from jarvis.deepagent import create_jarvis_agent
+from jarvis.deepagent import create_jarvis_agent, init_calendar_tools, init_market_feed_tools
 from jarvis.config import WORKSPACE_DIR  # Use config.py for correct workspace path
 from jarvis.sub_agents.atlas import atlas_agent
 from jarvis.sub_agents.emma import emma_agent
@@ -60,12 +61,110 @@ class ClientInfo(BaseModel):
     file_count: int
 
 
+class EmailSuggestion(BaseModel):
+    id: str
+    client_name: str
+    to: str
+    subject: str
+    body: str
+    status: str = "pending"  # pending | approved | rejected
+    created_at: str
+
+
+class ApproveEmailRequest(BaseModel):
+    edited_body: Optional[str] = None
+
+
 # ============================================================================
 # Notification Storage (in-memory for simplicity)
 # ============================================================================
 
 _notifications: List[dict] = []
 MAX_NOTIFICATIONS = 50
+
+
+# ============================================================================
+# Email Suggestion Storage (in-memory)
+# ============================================================================
+
+_email_suggestions: dict = {}
+
+
+def seed_email_suggestions():
+    """Seed demo email suggestions that Jarvis has drafted and Emma has verified."""
+    suggestions = [
+        {
+            "id": str(uuid.uuid4()),
+            "client_name": "David Chen",
+            "to": "David Chen <david.chen@globalbank.com>",
+            "subject": "Remortgage Options – Summary Attached",
+            "body": (
+                "Hi David,\n\n"
+                "As discussed, I've attached the remortgage comparison.\n\n"
+                "Key trade-off is flexibility versus certainty:\n"
+                "- 5-year fix: lower rate, more optionality\n"
+                "- 10-year fix: higher rate, but aligns with retirement horizon\n\n"
+                "This becomes more nuanced if we layer in the French property, so I suggest "
+                "we park a final decision until after the March trip.\n\n"
+                "Happy to talk it through.\n\n"
+                "Best,\nAbimanyu"
+            ),
+            "status": "pending",
+            "created_at": "2026-02-26T16:18:00",
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "client_name": "Keith Lard",
+            "to": "David Green <david.green@accountancy.co.uk>",
+            "subject": "Company Pension Contribution – Keith Lard",
+            "body": (
+                "Hi David,\n\n"
+                "As discussed, please proceed with the £180,000 employer pension contribution "
+                "for Keith Lard's SIPP before the company liquidation process begins.\n\n"
+                "This utilises carry-forward allowances and is the preferred extraction method.\n\n"
+                "Let us know once processed.\n\n"
+                "Kind regards,\nAbimanyu"
+            ),
+            "status": "pending",
+            "created_at": "2026-02-26T16:05:00",
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "client_name": "Lisa Rahman",
+            "to": "Lisa Rahman <lisa.rahman@digitalmarketing.co.uk>",
+            "subject": "Wills – Solicitor Introduction",
+            "body": (
+                "Hi Lisa,\n\n"
+                "Following up as promised — I've re-sent the details for the solicitor to update "
+                "your wills and include both children, with guardianship for Mark confirmed.\n\n"
+                "No urgency panic, but it's one of those things that's much easier done calmly.\n\n"
+                "Let me know if you'd like me to chase on your behalf.\n\n"
+                "Best,\nAbimanyu"
+            ),
+            "status": "pending",
+            "created_at": "2026-02-26T13:42:00",
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "client_name": "Priya Patel",
+            "to": "Anil Patel <anil.patel@datainsights.com>",
+            "subject": "Pension Consolidation – Forms Re-sent",
+            "body": (
+                "Hi Anil,\n\n"
+                "I've re-sent the pension consolidation paperwork for the Accenture and Deloitte schemes.\n\n"
+                "As a reminder, current charges are costing roughly £800 per year more than necessary. "
+                "Once completed, this becomes a set-and-forget improvement.\n\n"
+                "Let me know if you want me to walk through the forms quickly — otherwise, "
+                "please aim to return these this month.\n\n"
+                "Best,\nAbimanyu"
+            ),
+            "status": "pending",
+            "created_at": "2026-02-26T15:21:00",
+        },
+    ]
+    for s in suggestions:
+        _email_suggestions[s["id"]] = s
+    print("[API] Email suggestions seeded successfully")
 
 
 def add_notification(notification_type: str, title: str, message: str):
@@ -107,6 +206,7 @@ def seed_demo_data():
 
 # Seed demo data on module load
 seed_demo_data()
+seed_email_suggestions()
 
 
 # ============================================================================
@@ -120,7 +220,7 @@ _chat_histories = {}
 def get_or_create_agent(agent_type: str, thread_id: str):
     """Get or create an agent for the given thread."""
     key = f"{agent_type}:{thread_id}"
-    
+
     if key not in _agents:
         if agent_type == "jarvis":
             _agents[key] = create_jarvis_agent()
@@ -132,7 +232,7 @@ def get_or_create_agent(agent_type: str, thread_id: str):
             _agents[key] = colin_agent
         else:
             raise ValueError(f"Unknown agent type: {agent_type}")
-    
+
     return _agents[key]
 
 
@@ -146,23 +246,31 @@ async def lifespan(app: FastAPI):
     import threading
     from jarvis.jarvis_heartbeat import run_scheduler, heartbeat_job
     from jarvis.config import HEARTBEAT_INTERVAL_MINUTES
-    
+
     print("🚀 Jarvis API starting...")
     print(f"📁 Workspace: {WORKSPACE_DIR}")
-    
+
+    # Pre-warm calendar MCP tools so the cache is ready before any request
+    print("📅 Loading Calendar MCP tools...")
+    await init_calendar_tools()
+    print("📅 Calendar MCP tools ready")
+
+    # Pre-warm market feed MCP tools
+    print("📈 Loading Market Feed MCP tools...")
+    await init_market_feed_tools()
+    print("📈 Market Feed MCP tools ready")
+
     # Start heartbeat scheduler in background thread
     def start_heartbeat():
         print(f"💓 Heartbeat scheduler started ({HEARTBEAT_INTERVAL_MINUTES} min interval)")
-        # Run initial heartbeat after a short delay
         import time
         time.sleep(300)  # Wait for API to be fully ready
         heartbeat_job()
-        # Then run the scheduler loop
         run_scheduler()
-    
+
     heartbeat_thread = threading.Thread(target=start_heartbeat, daemon=True)
     heartbeat_thread.start()
-    
+
     yield
     print("👋 Jarvis API shutting down...")
 
@@ -203,6 +311,63 @@ async def root():
     return {"status": "online", "service": "Jarvis Financial Advisor API"}
 
 
+from jarvis.tools.voice_pipeline import stt_stream, agent_stream, tts_stream
+
+@app.websocket("/ws/voice")
+async def websocket_voice_endpoint(websocket: WebSocket):
+    """
+    WebSocket endpoint for real-time voice interaction using the Sandwich architecture.
+    Client sends PCM audio (bytes). Server sends STT text, Agent text, and TTS PCM audio back.
+    """
+    await websocket.accept()
+    session_id = str(uuid.uuid4())
+    print(f"[WebSocket] Voice connection established: {session_id}")
+
+    # 1. Producer: Read audio bytes from the client into an async generator
+    async def websocket_audio_stream():
+        try:
+            while True:
+                data = await websocket.receive_bytes()
+                yield data
+        except WebSocketDisconnect:
+            print(f"[WebSocket] Client disconnected: {session_id}")
+        except Exception as e:
+            print(f"[WebSocket] Error reading audio: {e}")
+
+    try:
+        # Create the pipeline: Audio -> STT -> Agent -> TTS
+        stt_gen = stt_stream(websocket_audio_stream())
+        agent_gen = agent_stream(stt_gen, session_id)
+        tts_gen = tts_stream(agent_gen)
+        
+        # 2. Consumer: Loop through final pipeline outputs and send to client
+        async for event in tts_gen:
+            if event.type == "stt_chunk" or event.type == "stt_output":
+                # Send transcript update
+                await websocket.send_json({"type": event.type, "text": event.transcript})
+            elif event.type == "agent_chunk":
+                # Send text response from agent
+                await websocket.send_json({"type": event.type, "text": event.text})
+            elif event.type == "tts_chunk":
+                # Send synthesized audio payload
+                await websocket.send_bytes(event.audio)
+            elif event.type == "error":
+                await websocket.send_json({"type": "error", "message": event.message})
+                
+    except Exception as e:
+        print(f"[WebSocket Pipeline Error] {e}")
+        try:
+            await websocket.send_json({"type": "error", "message": "Voice pipeline encountered an error."})
+        except:
+            pass
+    finally:
+        try:
+            await websocket.close()
+        except:
+            pass
+        print(f"[WebSocket] Voice connection closed: {session_id}")
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
@@ -216,9 +381,9 @@ async def chat(request: ChatRequest):
         # Prepare the input
         config = {"configurable": {"thread_id": thread_id}}
         
-        # Invoke the agent
+        # Invoke the agent (ainvoke is non-blocking — releases the event loop while the LLM responds)
         if request.agent == "jarvis":
-            result = agent.invoke(
+            result = await agent.ainvoke(
                 {"messages": [("user", request.message)]},
                 config
             )
@@ -230,7 +395,7 @@ async def chat(request: ChatRequest):
                     break
         else:
             # Sub-agents (atlas, emma, colin)
-            result = agent.invoke(
+            result = await agent.ainvoke(
                 {"messages": [("user", request.message)]},
                 config
             )
@@ -429,3 +594,229 @@ async def get_scheduled_tasks():
     """
     jobs = get_all_scheduled_jobs()
     return [ScheduledTask(**job) for job in jobs]
+
+
+# ============================================================================
+# Email Suggestions
+# ============================================================================
+
+@app.get("/api/email-suggestions", response_model=List[EmailSuggestion])
+async def get_email_suggestions():
+    """
+    Return all pending email suggestions drafted by Jarvis and verified by Emma.
+    """
+    pending = [
+        EmailSuggestion(**s)
+        for s in _email_suggestions.values()
+        if s["status"] == "pending"
+    ]
+    # Sort by created_at descending
+    pending.sort(key=lambda x: x.created_at, reverse=True)
+    return pending
+
+
+@app.post("/api/email-suggestions/{suggestion_id}/approve")
+async def approve_email_suggestion(
+    suggestion_id: str,
+    request: ApproveEmailRequest = ApproveEmailRequest(),
+):
+    """
+    Approve a Jarvis-suggested email and send it via the Calendar MCP (saves to email_archive).
+    """
+    if suggestion_id not in _email_suggestions:
+        raise HTTPException(status_code=404, detail="Suggestion not found")
+
+    suggestion = _email_suggestions[suggestion_id]
+    if suggestion["status"] != "pending":
+        raise HTTPException(status_code=400, detail=f"Suggestion is already {suggestion['status']}")
+
+    # Use edited body if provided, otherwise use original
+    body = request.edited_body if request.edited_body else suggestion["body"]
+
+    try:
+        # Directly call the calendar_server send_email function
+        # (imported module, not subprocess — MCP tools are loaded at startup)
+        from jarvis.tools.calendar_server import send_email as calendar_send_email
+        result = calendar_send_email(
+            client_name=suggestion["client_name"],
+            to=suggestion["to"],
+            subject=suggestion["subject"],
+            body=body,
+        )
+
+        if not result.get("success"):
+            raise HTTPException(status_code=500, detail="Calendar MCP send_email failed")
+
+        # Mark as approved
+        _email_suggestions[suggestion_id]["status"] = "approved"
+
+        return {
+            "success": True,
+            "message": result.get("message", "Email sent and archived successfully."),
+            "filename": result.get("filename"),
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
+
+
+@app.post("/api/email-suggestions/{suggestion_id}/reject")
+async def reject_email_suggestion(suggestion_id: str):
+    """
+    Reject a Jarvis-suggested email (removes it from the pending list).
+    """
+    if suggestion_id not in _email_suggestions:
+        raise HTTPException(status_code=404, detail="Suggestion not found")
+
+    suggestion = _email_suggestions[suggestion_id]
+    if suggestion["status"] != "pending":
+        raise HTTPException(status_code=400, detail=f"Suggestion is already {suggestion['status']}")
+
+    _email_suggestions[suggestion_id]["status"] = "rejected"
+    return {"success": True, "message": "Email suggestion rejected."}
+
+
+# ============================================================================
+# Meetings
+# ============================================================================
+
+class Meeting(BaseModel):
+    id: str
+    client_name: str
+    client_email: str
+    subject: str
+    content: str
+    date: str          # YYYY-MM-DD
+    start_time: str    # HH:MM
+    end_time: str      # HH:MM
+
+
+def _get_demo_meetings() -> List[dict]:
+    """Return hardcoded demo meetings for the current week."""
+    return [
+        {
+            "id": "mtg-001",
+            "client_name": "Gareth Cheeseman",
+            "client_email": "gareth.cheeseman@constructionpm.com",
+            "subject": "Property Purchase & Protection Review",
+            "content": (
+                "Follow-up from Gareth's salary increase confirmation (now £78k). "
+                "He has redirected extra income into house savings as agreed.\n\n"
+                "Agenda:\n"
+                "• Review deposit progress — current savings £45k vs target £40k deposit\n"
+                "• Discuss timeline for property purchase (target Jul 2026)\n"
+                "• Urgent: Will update needed post-divorce — currently leaving estate to ex-spouse Claire\n"
+                "• Income protection — still unprotected during peak financial responsibility years\n"
+                "• Jack's ongoing therapy costs and custody arrangement impact on budget"
+            ),
+            "date": "2026-02-27",
+            "start_time": "09:00",
+            "end_time": "10:00",
+        },
+        {
+            "id": "mtg-002",
+            "client_name": "Brian Potter",
+            "client_email": "brian.potter47@gmail.com",
+            "subject": "Downsizing Options & Gifting Strategy for Sarah",
+            "content": (
+                "Follow-up from our earlier call about supporting daughter Sarah. "
+                "Brian was emotional — this needs a sensitive approach.\n\n"
+                "Agenda:\n"
+                "• Walk through the £30k gift option for Sarah with transparency plan for Andrew\n"
+                "• Review downsizing options — potential £150k equity release from Willow Close\n"
+                "• Margaret's inherited ISA (£47k) — spousal transfer still pending\n"
+                "• Excess cash position (£115k across savings/premium bonds) — discuss investment\n"
+                "• Check in on Brian's wellbeing — bereavement support, loneliness concerns"
+            ),
+            "date": "2026-02-27",
+            "start_time": "14:00",
+            "end_time": "15:00",
+        },
+        {
+            "id": "mtg-003",
+            "client_name": "Hyacinth Bucket",
+            "client_email": "hyacinth.bucket@talktalk.net",
+            "subject": "Sheridan Financial Support & LPA Planning",
+            "content": (
+                "Follow-up from Hyacinth's urgent email about Sheridan needing financial assistance again. "
+                "Historic £25k already unrepaid.\n\n"
+                "Agenda:\n"
+                "• Discuss boundaries for Sheridan support — unbounded goal is depleting savings\n"
+                "• Critical: LPAs and will update for both Hyacinth (73) and Richard (75) — neither in place\n"
+                "• Savings runway risk — depletion projected early 2030s without changes\n"
+                "• Richard's private pension drawdown (£45k remaining) — withdrawal strategy\n"
+                "• Car replacement goal — recommended budget £18k vs Hyacinth's £35k aspiration"
+            ),
+            "date": "2026-02-28",
+            "start_time": "10:00",
+            "end_time": "11:00",
+        },
+        {
+            "id": "mtg-004",
+            "client_name": "Robert Hughes",
+            "client_email": "robert.hughes@rghlegal.com",
+            "subject": "BTL Refinancing & Pre-Retirement Strategy",
+            "content": (
+                "Follow-up from the BTL rate update email. "
+                "Guildford property rate expired Aug 2025 — refinancing overdue.\n\n"
+                "Agenda:\n"
+                "• Review latest refinancing rates for Guildford BTL (current mortgage £85k)\n"
+                "• Recommendation: Sell Guildford BTL post-refinance — after-tax return weak vs alternatives\n"
+                "• Partnership exit planning — £280k buyout over 4 years (£70k/year)\n"
+                "• IHT exposure estimated ~£580k — LPAs, updated wills, gifting strategy needed\n"
+                "• Tom's house deposit gift (£75k) — timing and tax implications\n"
+                "• Charles Stanley managed portfolio fee drag — £2,720/year, worth reviewing"
+            ),
+            "date": "2026-03-02",
+            "start_time": "11:00",
+            "end_time": "12:00",
+        },
+        {
+            "id": "mtg-005",
+            "client_name": "Rodney & Cassandra Trotter",
+            "client_email": "cass.trotter@citybank.co.uk",
+            "subject": "House Purchase Deposit & Debt Clearance Plan",
+            "content": (
+                "Follow-up from Cassandra's email expressing frustration about housing delays. "
+                "She wants to see 'real progress this year'.\n\n"
+                "Agenda:\n"
+                "• Deposit position — current savings £38k joint + ISAs vs £50k target\n"
+                "• Director's loan (£12k overdrawn) — declare dividend to clear and avoid S455 tax\n"
+                "• Personal loan at 9.8% interest — prioritise clearing £8k balance\n"
+                "• Rodney's salary restructure — increase to £60k for mortgage strength\n"
+                "• Income protection — Rodney self-employed with two dependants, currently unprotected\n"
+                "• Relationship check-in — financial stress driving marital tension"
+            ),
+            "date": "2026-03-03",
+            "start_time": "15:00",
+            "end_time": "16:00",
+        },
+        {
+            "id": "mtg-006",
+            "client_name": "Basil Fawlty",
+            "client_email": "basil@fawltytowers.co.uk",
+            "subject": "Hotel Exit Strategy & Valuation Discussion",
+            "content": (
+                "Follow-up from Basil's email rejecting the £1.45m valuation as 'unrealistic'. "
+                "He remains emotionally attached to the hotel. Sybil wants to proceed with a sale.\n\n"
+                "Agenda:\n"
+                "• Address Basil's valuation expectations — agent estimates £1.2m–£1.3m range\n"
+                "• CGT planning — estimated gain £925k, BADR tax ~£92.5k\n"
+                "• Lease-back option as compromise — potential income £48k/year\n"
+                "• Retirement income modelling — £65k/year target from pensions + investments\n"
+                "• Mediterranean relocation plans — budget £120k for overseas property\n"
+                "• Manage Basil/Sybil dynamic — need aligned decision before proceeding"
+            ),
+            "date": "2026-03-04",
+            "start_time": "09:30",
+            "end_time": "10:30",
+        },
+    ]
+
+
+@app.get("/api/meetings", response_model=List[Meeting])
+async def get_meetings():
+    """
+    Get upcoming meetings for the advisor.
+    """
+    return [Meeting(**m) for m in _get_demo_meetings()]
