@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import ChatPage from './pages/ChatPage';
 import ClientsPage from './pages/ClientsPage';
+import MeetingsPage from './pages/MeetingsPage';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/clients" element={<ClientsPage />} />
+            <Route path="/meetings" element={<MeetingsPage />} />
           </Routes>
         </main>
       </div>

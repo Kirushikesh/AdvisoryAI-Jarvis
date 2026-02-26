@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import NotificationPanel from '../components/NotificationPanel';
+import EmailSuggestions from '../components/EmailSuggestions';
 import ScheduledTasks from '../components/ScheduledTasks';
 import './DashboardPage.css';
 
@@ -14,6 +15,7 @@ const DashboardPage = () => {
             <div className="dashboard-grid">
                 <div className="dashboard-main">
                     <NotificationPanel />
+                    <EmailSuggestions />
                     <ScheduledTasks />
                 </div>
 
