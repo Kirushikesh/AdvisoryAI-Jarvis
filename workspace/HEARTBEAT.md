@@ -12,9 +12,11 @@ You are running a scheduled check. Your goal is to be proactive but unintrusive.
 - If you find relevant new files, read them to understand the context.
 
 ## 2. Market & Compliance Check
-- Use `get_market_news` to search for:
-    - Recent UK Financial Market news (last 24h).
-    - Recent UK Compliance/Regulatory news.
+- The goal during the heartbeat is to check recent news and market data, and act on top of that to check on your clients.
+- Use the following tools to gather market intelligence:
+    - `get_macro_indicators` to check macro-economic indicators (e.g., interest rates, inflation).
+    - `search_financial_news` to search for recent UK Financial Market news (last 24h) and UK Compliance/Regulatory news.
+    - `get_asset_performance` to check performance snapshots for relevant client assets, funds, or indices.
 
 ## 3. Analysis (Atlas)
 - If you find significant news OR new client files, ask **Atlas** to analyze the impact on your clients.

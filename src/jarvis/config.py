@@ -12,10 +12,8 @@ CLIENT_DATA_PATH = DATASETS_DIR  # Alias for file_monitor tool
 RAW_DATASETS_DIR = BASE_DIR / "raw_datasets"
 SYSTEM_PROMPT_DIR = BASE_DIR / "system_prompt"
 MEMORY_DIR = WORKSPACE_DIR / "memory"
+EMAIL_ARCHIVE_DIR = BASE_DIR / "email_archive"  # Owned by the Calendar MCP server
 
-# Subdirectories
-EMAIL_ARCHIVE_DIR = "email_archive"
-MEETING_TRANSCRIPTS_DIR = "meeting_transcripts"
 
 # API Keys (Loaded from environment)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
