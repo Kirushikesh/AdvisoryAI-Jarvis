@@ -193,7 +193,7 @@ After calling the tool(s), reply HEARTBEAT_OK.
     return prompt
 
 
-def create_jarvis_agent(system_prompt: str = None, model: str = "openai:gpt-4.1", extra_tools: list = []):
+def create_jarvis_agent(system_prompt: str = None, model: str = "openai:gpt-5.1-chat-latest", extra_tools: list = []):
     """
     Creates and returns the Jarvis Deep Agent with specialized subagents.
     Calendar MCP tools are always included (loaded from cache).

@@ -7,7 +7,8 @@ You are running a scheduled check. Your goal is to be proactive but unintrusive.
 - During work hours, be thorough.
 
 ## 1. File Monitoring
-- Check the `datasets/` folder for any new files in `email_archive/` or `meeting_transcripts/` that look recent or unprocessed.
+- Check the `datasets/` folder for any new files `meeting_transcripts/` that look recent or unprocessed.
+- Use the email tool to check for any new emails that look recent or unprocessed.
 - Use `find_files_updated_after` to check for recently added files.
 - If you find relevant new files, read them to understand the context.
 
@@ -32,3 +33,9 @@ You are running a scheduled check. Your goal is to be proactive but unintrusive.
 
 ## 6. Self-Correction
 - If you find these instructions unclear or needing adjustment based on your experience, you are authorized to update this file (`HEARTBEAT.md`) with better instructions for your future self.
+
+If something **does** need attention, you MUST take action by calling the appropriate tool:
+- Use `send_important_notification` to push an urgent alert to the advisor's dashboard.
+- Use `send_draft_email` to create a draft email for the advisor to review and approve before sending.(After getting emma subagent approval on the draft email)
+
+Do NOT simply reply with alert text because the heartbeat response will not be sent to the advisor, the advisor can only see the draft emails and the notifications. So make sure to call these tools to notify the advisor only if something is important.

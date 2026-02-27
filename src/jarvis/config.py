@@ -24,7 +24,7 @@ WATSONX_URL = os.getenv("WATSONX_URL")
 WATSONX_PROJECT_ID = os.getenv("WATSONX_PROJECT_ID")
 
 # Heartbeat Configuration
-HEARTBEAT_INTERVAL_MINUTES = 30
+HEARTBEAT_INTERVAL_MINUTES = int(os.getenv("HEARTBEAT_INTERVAL_MINUTES", 30))
 HEARTBEAT_PROMPT = (
     "Read HEARTBEAT.md if it exists (workspace context). "
     "Follow it strictly. Do not infer or repeat old tasks from prior chats. "
