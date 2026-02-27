@@ -13,3 +13,4 @@ wheels/
 .venv
 .env
 .DS_Store
+external_package_docs/

@@ -16,6 +16,8 @@ Jarvis is a sophisticated AI assistant designed specifically for Independent Fin
 | **Frontend** | [Vercel Dashboard](https://advisory-ai-jarvis-bxxlbyth2-kirushikesh-dbs-projects.vercel.app/) |
 | **Backend API** | [Railway API Docs](https://advisoryai-jarvis-production-bcea.up.railway.app/docs) |
 
+> **Login Credentials:** Username: `abimanyu` | Password: `admin`
+
 ---
 
 ## 🏗️ Core Architecture
@@ -28,8 +30,9 @@ Jarvis is a sophisticated AI assistant designed specifically for Independent Fin
 ### Model Usage
 | Context | Model |
 |---------|-------|
-| Direct Chat (Jarvis) | `openai:gpt-4.1` |
-| Heartbeat & Cron Jobs | `openai:gpt-5-nano` |
+| Direct Chat (Jarvis) | `openai:gpt-4.o` |
+| Heartbeat & Cron Jobs | `openai:gpt-4o-mini` |
+| Voice Agents (TTS & STT)| Built-in OpenAI models |
 
 ---
 
@@ -41,16 +44,18 @@ Jarvis is built using [LangChain Deep Agents](https://github.com/langchain-ai/de
 - **Tool orchestration** with built-in filesystem, web, and custom tools
 - **Sub-agent delegation** for specialized tasks
 
-### 2. Dynamic System Prompt
+### 2. Multi-Channel Communication (Telegram & Voice)
+- **Telegram Integration**: Advisors can communicate with Jarvis or any of the sub-agents directly from Telegram, making the assistant accessible on the go.
+- **Voice Agents**: Jarvis and its sub-agents feature built-in voice capabilities. Text-to-Speech (TTS) and Speech-to-Text (STT) are seamlessly integrated using OpenAI models, enabling natural Voice-to-Voice interactions via a "Sandwich Architecture".
+
+### 3. Dynamic System Prompt
 Instead of a static prompt, Jarvis builds its personality and context dynamically at runtime by reading workspace files:
 - `SOUL.md` - Core personality and values
 - `IDENTITY.md` - Professional identity as a financial advisor assistant
 - `USER.md` - Information about the advisor Jarvis serves
 - `HEARTBEAT.md` - Instructions for autonomous background checks
 
-This allows the advisor to customize Jarvis's behavior by simply editing markdown files.
-
-### 3. Sub-Agents (Board of Specialists)
+### 4. Sub-Agents (Board of Specialists)
 Jarvis delegates specialized tasks to three expert sub-agents:
 
 | Agent | Role | When Used |
@@ -59,65 +64,52 @@ Jarvis delegates specialized tasks to three expert sub-agents:
 | **Emma** | Paraplanner | Drafts professional client communications |
 | **Colin** | Compliance | Validates outputs against UK FCA regulations |
 
-Each sub-agent has its own system prompt, tools, and communication style.
+### 5. MCP Server Integrations (Calendar & News)
+Jarvis natively connects to standardized Model Context Protocol (MCP) servers:
+- **Calendar MCP**: Directly integrates calendar capabilities. The UI features a dedicated **Calendar Page**, where advisors can click **"Get Insights with Atlas"** on any meeting to automatically have Atlas query relevant client files and prepare insights for the meeting.
+- **Market News MCP**: Equips the orchestrator with specialized tools to fetch macroeconomic indicators, financial news, and asset performance via Tavily and other sources.
 
-### 4. Skills
-Skills are modular, file-based instruction sets that extend Jarvis's capabilities without modifying code. Located in `./skills/`, each skill contains:
-- `SKILL.md` - Instructions and workflows
-- Supporting scripts and templates
+### 6. Email Drafts & Advisor Approval Workflow
+Jarvis and Emma autonomously draft responses to incoming client emails. 
+- These drafts are populated directly in the **UI's Email Drafts** section.
+- The advisor can review, edit, approve, or reject these drafts before they are sent, ensuring complete control over client correspondence.
 
-Jarvis automatically loads and uses relevant skills based on the task context.
+### 7. Proactive Background Heartbeat
+Jarvis runs continuously in the background using APScheduler. 
+- During a heartbeat, Jarvis monitors live market news and client files.
+- **Direct Actions:** If urgent info is found, Jarvis can directly use its tools to **Raise a Notification** to the advisor via the UI/Telegram, or generate an **Email Draft** to proactively handle the situation without explicit prompting.
 
-### 5. Cron Jobs (Scheduled Tasks)
-Jarvis can schedule its own future tasks using APScheduler. This enables:
-- **Periodic reviews** - e.g., "Review client portfolios every Monday at 9am"
-- **Deadline reminders** - e.g., "Remind me about Sarah's annual review in 3 days"
-- **Autonomous monitoring** - Self-scheduled tasks that run without human intervention
-
-The dashboard displays all scheduled tasks and allows manual cancellation.
-
-### 6. Memory Files
-Jarvis maintains persistent memory through workspace files:
-- `memory/daily_log.md` - Record of daily interactions and outcomes
-- `memory/client_notes.md` - Important client-specific observations
-
-This allows Jarvis to recall past conversations and build context over time.
-
-### 7. Silent Reply Tokens
-To save tokens and avoid unnecessary chatter, Jarvis uses special tokens:
-- `NO_REPLY` - When there's nothing meaningful to say (e.g., simple greetings)
-- `HEARTBEAT_OK` - When a background check finds nothing urgent
-
-The API filters these tokens so they never reach the user interface.
-
-### 8. ChromaDB Vector Store
+### 8. Memory & Vector Store (ChromaDB)
 Client documents (emails, transcripts, policies) are embedded and stored in ChromaDB for semantic search. This enables:
 - **Context-aware retrieval** - Find relevant documents based on meaning, not just keywords
 - **Cross-client analysis** - Search across all clients for similar situations
-- **Efficient long-term memory** - Store large document collections without token limits
 
-### 9. Tools
+### 9. Custom Tools
 Jarvis has access to both default and custom tools:
 
-**Default Tools (from Deep Agents):**
+**Default Deep Agent Tools:**
 - Filesystem operations (read, write, list, glob)
 - Web browsing and search
 - Planning and task management
 
-**Custom Tools:**
+**Custom Financial & System Tools:**
 | Tool | Purpose |
 |------|---------|
-| `get_market_news` | Fetches live UK financial news via Tavily |
-| `find_files_updated_after` | Detects recently modified workspace files |
-| `add_cron_job` | Schedules future tasks |
-| `remove_cron_job` | Cancels scheduled tasks |
-| `list_cron_jobs` | Shows all scheduled tasks |
+| `get_macro_indicators` | Fetches macroeconomic indicators via Market News MCP |
+| `search_financial_news`| Searches for recent UK Financial/Regulatory news via Market News MCP |
+| `get_asset_performance`| Checks performance snapshots for assets via Market News MCP |
+| `raise_notification` | Sends an urgent alert directly to the dashboard from the heartbeat |
+| `draft_email` | Drafts a client email for advisor review |
 | `retrieve_context` | Vector search in ChromaDB (Atlas) |
 | `search_uk_compliance` | FCA regulatory search (Colin) |
 
 ---
 
 ## 🚀 Quick Start: Testing the Demos
+
+### Login to Dashboard
+- **Username**: `abimanyu`
+- **Password**: `admin`
 
 ### Demo 1: The Reactive "Urgency Sweep"
 *Test Jarvis's ability to scan his entire "book" for urgent matters.*
@@ -128,7 +120,6 @@ Jarvis has access to both default and custom tools:
    > *"Show me anything in the last 10 days that looks urgent across my book (emails and meeting notes)?"*
 4. **Behind the Scenes**: Jarvis will scan `datasets/**` for files modified between Jan 28 and Feb 08, 2026, and use **Atlas** to identify risks.
 
-The sample langsmith trajectory: [here](https://smith.langchain.com/public/d7b24352-13ce-454a-bfac-d509996f2a4d/r)
 ### Demo 2: The Proactive Heartbeat (Gareth Cheeseman)
 *Test how Jarvis identifies new incoming data and alerts you autonomously.*
 
@@ -137,10 +128,23 @@ The sample langsmith trajectory: [here](https://smith.langchain.com/public/d7b24
    - Go to the "Clients" page in the dashboard.
    - Select **Gareth Cheeseman**.
    - Upload the sample file as an "Email Archive" document.
-3. **The Result**: Within 30 minutes (or on the next heartbeat), a notification will appear in the Dashboard: 
+3. **The Result**: Within 30 minutes (or on the next heartbeat), a notification or email draft will appear in the Dashboard: 
    > *"🚨 Jarvis Alert: Gareth Cheeseman has emailed regarding income protection policies due to illness..."*
 
-The sample langsmith trajectory: [here](https://smith.langchain.com/public/2cd268e8-bdf6-4ab5-875a-eb580628ca99/r)
+### Demo 3: Multi-Agent Telegram Chat
+*Test how advisors can talk to any of the sub-agents on the go.*
+
+1. **Setup Token**: Ensure `TELEGRAM_BOT_TOKEN` is set in your `.env` file.
+2. **Start the Bot**: Open a new terminal and run:
+```bash
+uv run python src/jarvis/telegram_bot.py
+```
+3. **Chat on Telegram**: Go to telegram and find **@Jarvis_Hackathon_Bot** (or whatever bot your token corresponds to).
+4. **Invoke Agents**: Prefix your messages with the agent's name to route the query:
+   - `@jarvis Who are my top 3 clients by AUM?`
+   - `@emma Draft a quick email to Gareth letting him know we are looking into his policy.`
+   - `@atlas What did Alan say in our last meeting about his risk tolerance?`
+   - `@colin Is it compliant to guarantee a 5% return in an email?`
 
 ---
 
@@ -151,11 +155,11 @@ The sample langsmith trajectory: [here](https://smith.langchain.com/public/2cd26
 python scripts/ingest_documents.py
 ```
 
-### 2. Run Backend (API + Heartbeat)
+### 2. Run Backend (API + Heartbeat + WebSocket)
 ```bash
 uv run uvicorn jarvis.api:app --reload --port 8000
 ```
-> **Note**: The heartbeat scheduler now runs as a background thread within the API.
+> **Note**: The heartbeat scheduler now runs as a background thread within the API. Websockets are enabled and expose the STT/TTS sandwich layers.
 
 ### 3. Run Frontend
 ```bash
@@ -175,28 +179,19 @@ cd frontend && npm run dev
 
 ## 🔮 Future Directions
 
-### 1. Multi-Channel Communication
-Integrate Jarvis with WhatsApp, Telegram, and Slack gateways so advisors can interact from their preferred messaging platform - not just the web dashboard.
-
-### 2. Direct Email & Calendar Integration
-Connect Jarvis directly to Gmail, Outlook, and calendar APIs via MCP (Model Context Protocol) servers. This would enable:
-- Automatic email ingestion without manual uploads
-- Meeting scheduling and follow-up reminders
-- Real-time client communication monitoring
-
-### 3. Group Chat with Clients
+### 1. Group Chat with Clients
 Embed Jarvis in group chats between advisor and client families. The advisor could invoke Jarvis with `@jarvis` to:
 - Answer client questions with compliance-checked responses
 - Pull relevant policy details mid-conversation
 - Draft follow-up actions in real-time
 
-### 4. Performance Benchmarking
+### 2. Performance Benchmarking
 Evaluate Jarvis quality using:
 - **Human judges** - Advisor ratings on response quality
 - **LLM-as-judge** - Automated scoring for consistency and compliance
 - **Task completion metrics** - Success rate on standard scenarios
 
-### 5. Extensible Skills Library
+### 3. Extensible Skills Library
 Build a library of shareable skills:
 - Annual review workflows
 - Product recommendation templates
