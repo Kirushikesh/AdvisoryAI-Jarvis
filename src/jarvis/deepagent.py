@@ -54,6 +54,7 @@ async def _fetch_calendar_tools() -> list:
                 "transport": "stdio",
                 "command": sys.executable,
                 "args": [_CALENDAR_SERVER_PATH],
+                "env": dict(_os.environ),  # explicitly propagate Railway env vars to subprocess
             }
         }
     )
@@ -89,6 +90,7 @@ async def _fetch_market_feed_tools() -> list:
                 "transport": "stdio",
                 "command": sys.executable,
                 "args": [_MARKET_FEED_SERVER_PATH],
+                "env": dict(_os.environ),  # explicitly propagate Railway env vars to subprocess
             }
         }
     )
