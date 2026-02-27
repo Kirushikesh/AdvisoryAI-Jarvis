@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ username }) => {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -55,6 +55,14 @@ const Sidebar = () => {
             </nav>
 
             <div className="sidebar-footer">
+                {username && (
+                    <div className="user-info">
+                        <div className="user-avatar">
+                            {username.charAt(0).toUpperCase()}
+                        </div>
+                        <span className="user-name">{username}</span>
+                    </div>
+                )}
                 <div className="agent-status">
                     <div className="status-indicator"></div>
                     <span>Jarvis Online</span>
