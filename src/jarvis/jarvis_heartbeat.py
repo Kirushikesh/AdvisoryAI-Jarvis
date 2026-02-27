@@ -1,3 +1,4 @@
+import asyncio
 import time
 import threading
 import schedule
@@ -13,39 +14,47 @@ from jarvis.tools.heartbeat_tools import send_important_notification, send_draft
 import uuid
 
 
-def heartbeat_job():
+async def _heartbeat_job_async():
     """
-    Scheduled heartbeat job that invokes Jarvis with the heartbeat prompt.
-    Runs every HEARTBEAT_INTERVAL_MINUTES.
+    Async implementation of the heartbeat job.
+    MCP tools (calendar, market-feed) are async-only, so the agent
+    graph MUST be driven with ainvoke — invoke() will raise NotImplementedError
+    when it tries to execute those tools synchronously.
     """
     print("\n[Scheduler]: Triggering Heartbeat...")
-    
+
+    # Create agent with auto-built system prompt and a fast model for heartbeat.
+    # Provide heartbeat-specific tools so the LLM can push notifications
+    # and draft emails on its own.
+    agent = create_jarvis_agent(
+        model="openai:gpt-5-nano",
+        extra_tools=[send_important_notification, send_draft_email],
+    )
+
+    # Use ainvoke — MCP tools are async-only and cannot be called via invoke()
+    result = await agent.ainvoke(
+        {"messages": [{"role": "user", "content": HEARTBEAT_PROMPT}]},
+        config={"configurable": {"thread_id": f"heartbeat_{uuid.uuid4()}"}}
+    )
+    response = result["messages"][-1].content
+
+    # Handle response based on tokens
+    if HEARTBEAT_OK_TOKEN in response:
+        print("[Scheduler]: Heartbeat OK - No action needed")
+    elif NO_REPLY_TOKEN in response:
+        print("[Scheduler]: No reply - Nothing to report")
+    else:
+        # Agent handled actions via tools (notification / draft email)
+        print("[Scheduler]: Heartbeat completed with tool actions")
+
+
+def heartbeat_job():
+    """
+    Synchronous wrapper around the async heartbeat so that `schedule` can call it.
+    Bridges the sync scheduler thread into an async event loop via asyncio.run().
+    """
     try:
-        # Create agent with auto-built system prompt and oss model for heartbeat
-        # Provide heartbeat-specific tools so the LLM can push notifications
-        # and draft emails on its own.
-        agent = create_jarvis_agent(
-            model="openai:gpt-5-nano",
-            extra_tools=[send_important_notification, send_draft_email],
-        )
-        
-        # Send the heartbeat prompt
-        result = agent.invoke(
-            {"messages": [{"role": "user", "content": HEARTBEAT_PROMPT}]},
-            config={"configurable": {"thread_id": f"heartbeat_{uuid.uuid4()}"}}
-        )
-        response = result["messages"][-1].content
-        
-        # Handle response based on tokens
-        if HEARTBEAT_OK_TOKEN in response:
-            print("[Scheduler]: Heartbeat OK - No action needed")
-        elif NO_REPLY_TOKEN in response:
-            print("[Scheduler]: No reply - Nothing to report")
-        else:
-            # Agent handles actions via tools (notification / draft email)
-            print(f"[Scheduler]: Heartbeat completed with tool actions")
-            pass
-            
+        asyncio.run(_heartbeat_job_async())
     except Exception as e:
         print(f"\n[Scheduler]: Error in heartbeat: {e}")
 
