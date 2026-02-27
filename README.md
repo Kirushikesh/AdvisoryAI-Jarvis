@@ -13,7 +13,7 @@ Jarvis is a sophisticated AI assistant designed specifically for Independent Fin
 
 | Component | URL |
 |-----------|-----|
-| **Frontend** | [Vercel Dashboard](https://advisory-ai-jarvis-bxxlbyth2-kirushikesh-dbs-projects.vercel.app/) |
+| **Frontend** | [advisory-ai-jarvis.vercel.app](https://advisory-ai-jarvis.vercel.app/) |
 | **Backend API** | [Railway API Docs](https://advisoryai-jarvis-production-bcea.up.railway.app/docs) |
 
 > **Login Credentials:** Username: `abimanyu` | Password: `admin`
