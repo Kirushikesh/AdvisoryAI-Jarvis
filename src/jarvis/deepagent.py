@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import asyncio
+import sys
 from deepagents import create_deep_agent, CompiledSubAgent
 from jarvis.tools.user_interaction import ask_user
 from jarvis.tools.file_monitor import find_files_updated_after
@@ -29,13 +30,18 @@ checkpointer = MemorySaver()
 # Calendar MCP tool cache
 # ---------------------------------------------------------------------------
 
+# When installed via `pip install .` in Docker, __file__ resolves into site-packages.
+# APP_DIR env var (set to /app in Dockerfile) anchors paths to the actual project root.
+import os as _os
+_PROJECT_ROOT = Path(_os.getenv("APP_DIR", str(Path(__file__).resolve().parent.parent.parent)))
+
 _CALENDAR_SERVER_PATH = str(
-    Path(__file__).resolve().parent / "tools" / "calendar_server.py"
+    _PROJECT_ROOT / "src" / "jarvis" / "tools" / "calendar_server.py"
 )
 _calendar_tools: list = []  # populated once, reused everywhere
 
 _MARKET_FEED_SERVER_PATH = str(
-    Path(__file__).resolve().parent / "tools" / "market_feed_server.py"
+    _PROJECT_ROOT / "src" / "jarvis" / "tools" / "market_feed_server.py"
 )
 _market_feed_tools: list = []  # populated once, reused everywhere
 
@@ -46,8 +52,8 @@ async def _fetch_calendar_tools() -> list:
         {
             "calendar": {
                 "transport": "stdio",
-                "command": "uv",
-                "args": ["run", _CALENDAR_SERVER_PATH],
+                "command": sys.executable,
+                "args": [_CALENDAR_SERVER_PATH],
             }
         }
     )
@@ -81,8 +87,8 @@ async def _fetch_market_feed_tools() -> list:
         {
             "market_feed": {
                 "transport": "stdio",
-                "command": "uv",
-                "args": ["run", _MARKET_FEED_SERVER_PATH],
+                "command": sys.executable,
+                "args": [_MARKET_FEED_SERVER_PATH],
             }
         }
     )

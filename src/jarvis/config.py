@@ -5,7 +5,10 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv(), override=True)
 
 # Base Paths
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# When installed via `pip install .` in Docker, __file__ resolves into site-packages.
+# APP_DIR env var (set to /app in Dockerfile) pins the project root correctly.
+_file_based_root = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(os.getenv("APP_DIR", str(_file_based_root)))
 WORKSPACE_DIR = BASE_DIR / "workspace"
 DATASETS_DIR = WORKSPACE_DIR / "datasets"
 CLIENT_DATA_PATH = DATASETS_DIR  # Alias for file_monitor tool
